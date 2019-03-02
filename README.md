@@ -14,7 +14,3 @@ These specifications are designed to support sharing any data that can be repres
 ## Open Questions
 
 ## Resources
- - [Overview Presentation](https://docs.google.com/presentation/d/14ZHmam9hwz6-SsCG1YqUIQnJ56bvSqEatebltgEVR6c/edit?usp=sharing)
- - [Client and Server Implementations](./implementations.md)
- - [Argonaut Project: Bulk Data Export Security Risk Assessment Report](./security-risk-assessment-report.pdf)
- - [Discussion Group (FHIR Zulip "Bulk Data" Track)](https://chat.fhir.org/#narrow/stream/bulk.20data)
