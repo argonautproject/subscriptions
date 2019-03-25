@@ -1,5 +1,22 @@
 # Argonaut Subscriptions
 
+## Timeline
+
+- April Launch!
+- April - May
+  - Develop use cases (cast a wide net)
+  - Review work on Subscriptions to-date
+  - Define scope (and out-of-scope)
+  - Client outreach
+  - Birds of feather at HL7 May Working Group Meeting
+- June - Aug
+  - Draft spec
+  - Publicly deployed reference implementation(s) that meet the draft spec
+- Sep - Dec
+  - Connectathon at HL7 September Working Group Meeting
+  - Publish Argonaut Subscriptions IG 1.0
+
+
 ## Overview
 
 ## Specifications and Prior work
