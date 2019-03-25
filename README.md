@@ -21,5 +21,5 @@
 - Notes & slides on Google Drive ([folder](https://drive.google.com/drive/folders/1I8zbQ1Yz3T9IwSumEmStRIkqSSI6iODm))
 - Realtime chat on [Zulip](https://chat.fhir.org/#narrow/stream/argonaut)
 - Spec development on [GitHub](#)
-- Granular decisions via [GitHub Issues](issues) + PRs
+- Granular decisions via [GitHub Issues](https://github.com/argonautproject/subscriptions/issues) + PRs
 - Calls every two weeks (or more often, if needed)
