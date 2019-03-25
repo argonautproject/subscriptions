@@ -17,3 +17,9 @@
 ## Open Questions
 
 ## Resources
+
+- Notes & slides on Google Drive ([folder](https://drive.google.com/drive/folders/1I8zbQ1Yz3T9IwSumEmStRIkqSSI6iODm))
+- Realtime chat on [Zulip](https://chat.fhir.org/#narrow/stream/argonaut)
+- Spec development on [GitHub](#)
+- Granular decisions via [GitHub Issues](#) + PRs
+- Calls every two weeks (or more often, if needed)
