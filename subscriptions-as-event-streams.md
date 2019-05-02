@@ -1,6 +1,6 @@
 Thinking about how to break a firehose of system events into a workable subscription system, one way to structure this would be to imagine event sources and filters, which might be pre-defined (for our purposes here) or created on-the-fly (in the most general case)... and which might require input parameters to evaluate.
 
-## Use Cases: Argonaut Scheduling
+## Two simple use cases: Argonaut Scheduling
 
 The approach here is motivated by two relatively simple use case cases that we're targeting with the Argonaut 2019 Subscriptions project:
 
