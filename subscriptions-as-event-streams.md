@@ -21,7 +21,7 @@ The event source (`EventDefinition`) here is a named `admission` event that requ
     "type": "named-event",
     "name": "admission",
     "condition": {
-      "expression": "status = 'arrived' and %previous.status != 'arrived'"
+      "expression": "%current.status = 'arrived' and %previous.status != 'arrived'"
     }
   }]
 }
@@ -31,7 +31,7 @@ The event source (`EventDefinition`) here is a named `admission` event that requ
   "resourceType": "EventFilter",
   "id": "by-patient",
   "condition": {
-    "expression": "this.subject = %patientId"
+    "expression": "%current.subject = %patientId"
   }
 }
 
@@ -41,7 +41,7 @@ The event source (`EventDefinition`) here is a named `admission` event that requ
   "resourceType": "EventFilter",
   "id": "by-gp",
   "condition": {
-    "expression": "this.subject.generalPractitioner = %practitionerId"
+    "expression": "%current.subject.resolve().generalPractitioner = %practitionerId"
   }
 }
 ```
@@ -127,7 +127,7 @@ One could also define a more pre-coordinated up-front event source:
     "type": "named-event",
     "name": "admission-by-patient",
     "condition": {
-      "expression": "subject = %patientId and status = 'arrived' and %previous.status != 'arrived'"
+      "expression": "%current.subject = %patientId and status = 'arrived' and %previous.status != 'arrived'"
     }
   }]
 }
@@ -160,7 +160,7 @@ that we have a broad design space to explore with this general approch of source
     "type": "named-event",
     "name": "encounter-by-any-status-change",
     "condition": {
-      "expression": "status != %previous.status"
+      "expression": "%current.status != %previous.status"
     }
   }]
 }
@@ -173,7 +173,7 @@ that we have a broad design space to explore with this general approch of source
     "type": "named-event",
     "name": "encounter-by-specific-status-change",
     "condition": {
-      "expression": "status = %specifiedStatus and %previous.status != 'arrived'"
+      "expression": "%current.status = %specifiedStatus and %previous.status != 'arrived'"
     }
   }]
 }
