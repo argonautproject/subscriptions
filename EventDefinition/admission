@@ -1,11 +1,12 @@
 {
   "resourceType": "EventDefinition",
   "id": "admission",
-  "trigger": {
+  "name": "admission",
+  "trigger": [{
     "type": "named-event",
     "name": "admission",
     "condition": {
       "expression": "status = 'arrived' and %previous.status != 'arrived'"
     }
-  }
+  }]
 }
