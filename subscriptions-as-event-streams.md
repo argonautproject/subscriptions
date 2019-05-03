@@ -1,7 +1,7 @@
 ## Subscribing to events (rather that "search sets")
 For many use cases (and much, much more generally), we want to winnow down a firehose of server events into a smaller event stream that a client can subscribe to -- in  way that is scalable and workable across diverse FHIR server architectures. One way to structure this is to imagine event sources and filters, which might be limited and pre-defined (perfectly acceptable for our purposes here) or perhaps created on-the-fly (in the most general case)...
 
-## Two simple use cases: Argonaut Scheduling
+## Two simple use cases: Argonaut ADT
 
 The approach here is motivated by two relatively simple use case cases that we're targeting with the Argonaut 2019 Subscriptions project:
 
