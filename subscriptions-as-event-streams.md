@@ -81,12 +81,12 @@ baseline event definition.
 ## The Rules
 
 1. Each `EventDefinition` specifies a stream of triggering events (e.g., admission, discharge, or new-result-available), and
-also provides a data-driven "condition" that pure-FHIR servers can use to determine when the event triggers
+also provides a data-driven "condition" that native-FHIR servers can use to determine when the event triggers
 based on CRUD operations. Facade-type FHIR servers can implement a fixed list of event sources by
 individually developing support for each and recognizing them by name.
 
 2. Each `EventFilter` provides a way to narrow down a stream of events, and includes a data-driven "condition"
-that pure-FHIR servers can use to generically apply the filter. Facade-type FHIR servers can implement a fixed
+that native-FHIR servers can use to generically apply the filter. Facade-type FHIR servers can implement a fixed
 list of filters by individually developing support for each and recognizing them by name.
 
 3. An `EventDefinition` or an `EventFilter` can be parameterized, e.g., the `by-patient` filter above requires
