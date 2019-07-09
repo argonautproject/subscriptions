@@ -7,8 +7,8 @@ specturm of integration from:
 
 1. Patient Encounter notifications to a consumer app via REST-Hook.
 2. Group Encounter notifications to an intermediary or clearing house via REST-Hook.
-- ? Encounter notifications to a consumer app via Websockets.
-- ? Encounter notifications to a consumer app via Server Side Events (SSE).
+- ? Patient Encounter notifications to an app via Websockets.
+- ? Patient Encounter notifications to an app via Server Side Events (SSE).
 - ? Define a new topic as a change notification to a resource.
 - ? Work with authentication
     - REST-Hook
@@ -22,7 +22,9 @@ For clarity in this document, the following words are defined as follows:
 
 Each scenario will include the above three tiers of components.  For each 
 scenario, reference implementations for the Server and Client will be provided, 
-as well as an implementation of the Trigger Server.
+as well as an implementation of the Trigger Server.  It is intented that an
+interested party can replace any portion of the running scenario with their own 
+implementation.
 
 - Server Proxy
 
@@ -30,6 +32,9 @@ as well as an implementation of the Trigger Server.
     to these scenarios.  It handles triggering and sending notifications via the 
     specified channels to clients.  This was done to highlight the areas needed to 
     implement the Server portion of Subscription handling.
+
+    An implementer may choose to take a similar approach (of proxying calls), or may
+    use a modified server directly.  Either option should result in the same behavior.
 
     Link to GitHub Project: 
 
@@ -103,19 +108,95 @@ as well as an implementation of the Trigger Server.
 
 ## Scenario 2: Group Encounter notifications to an intermediary or clearing house via REST-Hook
 
+#### Subscription Information
+
 - Topic: `admission`
 - Allowed filters: `member-of-group`/`:in`
 - Allowed channel types: `REST-Hook`
 - Allowed payloads: `Ping`, `ID-only`, `Full`
 
+#### Workflow [(Diagram)](https://github.com/microsoft-healthcare-madison/argo-subscription-docs/blob/master/IntermediaryWorkflows/svg/GenericGroup.svg)
 
-## Scenario 3: Encounter notifications to a consumer app via Websockets
 
-## Potential Scenario: Encounter notifications to a consumer app via Server Side Events (SSE)
+#### Client Information
+
+- (Optional) Implement Topic discovery
+- Determine filter for Encounter based on Group Membership
+- Create a REST endpoint
+- Send a Subscription request to the server
+- Handle Subscription REST Handshake
+- Receive notifications via REST endpoint
+- Notify user that an event has occurred.
+
+#### Intermediary Information
+
+- Implement Topic discovery
+- Manage Subscriptions
+  - Accept Subscription requests
+  - Validate REST-Hook channel endpoints
+- Create REST endpoint for Server events
+- Subscribe to Server for events
+- Listen for event notifications
+- Filter and match for applicable Subscriptions
+- Send event notifications to Client
+
+#### Server Information
+
+- Implement Topic discovery
+- Manage Subscriptions
+  - Accept Subscription requests
+  - Validate REST-Hook channel endpoints
+- Accept Encounter resources
+- Accept Group Membership resources/changes
+- Filter and match for applicable Subscriptions
+- Send event notifications
+
+#### Trigger Information
+
+- Accept patient group membership information
+- Generate one or more Patient records for a specified group
+- Generate one or more Ecounter records for a relevant patient
+  - Once
+  - Periodic
+
+## Scenario 3: Patient Encounter notifications to an app via Websockets
+
+#### Subscription Information
+
+- Topic: `admission`
+- Allowed filters: `Patient`
+- Allowed channel types: `Websocket`
+- Allowed payloads: `Ping`, `ID-only`, `Full`
+
+## Potential Scenario: Patient Encounter notifications to an app via Server Side Events (SSE)
+
+#### Subscription Information
+
+- Topic: `admission`
+- Allowed filters: `Patient`
+- Allowed channel types: `Server-Side-Events`
+- Allowed payloads: `Ping`, `ID-only`, `Full`
+
 
 ## Potential Scenario: Define a new topic as a change notification to a resource
 
+#### Basic Information
+
+- Topic: `admission`
+- Allowed filters: 
+
 ## Potential Scenario: Work with authentication (REST-Hook)
+
+#### Subscription Information
+
+- Topic: `admission`
+- Allowed filters: `Patient`
+- Allowed channel types: `REST-Hook`
+- Allowed payloads: `Ping`, `ID-only`, `Full`
 
 ## Potential Scenario: Work with authentication (Websocket)
 
+- Topic: `admission`
+- Allowed filters: `Patient`
+- Allowed channel types: `Websocket`
+- Allowed payloads: `Ping`, `ID-only`, `Full`
