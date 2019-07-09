@@ -1,0 +1,23 @@
+title Intermediary Workflow
+
+participant Facility A
+participant Intermediary
+participant Facility B
+
+parallel
+
+Intermediary ->Facility A: Create subscription:\n - Topic: **admission**\n - Filter: **NONE**
+
+Intermediary ->Facility B: Create subscription:\n - Topic: **admission**\n - Filter: **NONE**
+
+parallel off
+
+Facility A -> Intermediary: Create subscription:\n - Topic: admission\n - Patient: John Doe\n - Identifer: 123\n - DOB: 1/1/1970
+
+note over Intermediary: Facility A, John Doe, 123, 1/1/1970\nAdded to patient internal matching.
+
+Facility B -> Intermediary: Admissions Event:\n - Patient: John A. Doe\n - Identifier: 456\n - DOB: 1/1/1970
+
+note over Intermediary: Search patient matching for matches...
+
+Intermediary ->Facility A: Admissions Event:\n - Patient: John Doe\n - Identifier: 123\n - DOB: 1/1/1970

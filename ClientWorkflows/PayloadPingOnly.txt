@@ -1,0 +1,24 @@
+title Client Workflow - Ping Only
+
+participant Server
+participant Client
+
+Server -> Client: Notification for:\n - Subscription: 'admission_p_123'\n - EventNumber: 5
+Client--> Server: Acknowledge
+
+
+entryspacing 3
+
+Client-> Server: Request Encounters\n - Patient: '123'
+entryspacing 1
+Server --> Client: List of Encounters\n - Patient: '123'
+
+entryspacing 3
+
+Client-> Server: Get Encounter\n - Id: 'p_123_enc_10'
+entryspacing 1
+Server --> Client: Data for:\n - Encounter 'p_123_enc_10'
+
+entryspacing 3
+
+note over Client: Process…

@@ -1,0 +1,18 @@
+title Simple Error
+
+participant Server
+participant Endpoint
+
+Server ->Endpoint: Event 1: Active
+Server ->Endpoint: Event 2: Active
+
+Server -#redx Endpoint: Event 3: Active
+
+note right of Endpoint: Out of order message detected
+
+space -6
+Server ->Endpoint: Event 4: Error
+
+Server ->Endpoint: Event 5: Active
+
+Server ->Endpoint: Event 6: Active

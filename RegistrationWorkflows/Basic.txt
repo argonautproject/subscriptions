@@ -1,0 +1,32 @@
+title Subscription registration workflow
+
+participantspacing 7
+
+participant Server
+participant Client
+
+group Prior to Subscription
+note right of Server:Server implements Topics,\n which includes the list of\nvalid filters for each Topic.
+
+Client->Server:Request list of Topic Resources
+Server-->Client:List of supported Topic Resources
+end
+
+note over Client:Client determines\nwhich Topic covers\ndesired notifications.
+
+note over Client:Client creates endpoint\nfor admissions for patient '123'
+
+participant Client Endpoint 123
+Client-->*Client Endpoint 123:
+
+Client->Server:Create Subscription\n - Topic: 'admissions'\n - Filter: Patient.id '123'\n - Payload: 'empty'\n - Endpoint: 'client_a/notifications/admissions/patient/123'
+
+note right of Server:Create subscription record\n - State: 'requested'
+
+Server-->Client:Acknowledge (401):\n - State: 'requested'\n - Identifier: 'admission_p_123'
+
+Server->Client Endpoint 123: Handshake request:\nIs this a valid notification endpoint\nfor id: 'admission_p_123'?
+
+Client Endpoint 123-->Server:Acknowledge
+
+note right of Server:Change subscription state to 'active'
