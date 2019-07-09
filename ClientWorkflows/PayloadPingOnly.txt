@@ -4,8 +4,7 @@ participant Server
 participant Client
 
 Server -> Client: Notification for:\n - Subscription: 'admission_p_123'\n - EventNumber: 5
-Client--> Server: Acknowledge
-
+Client--> Server: Channel Response\n(e.g., HTTP:200)
 
 entryspacing 3
 
