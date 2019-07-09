@@ -7,7 +7,7 @@ specturm of integration from:
 
 1. Patient Encounter notifications to a consumer app via REST-Hook.
 2. Group Encounter notifications to an intermediary or clearing house via REST-Hook.
-3. Encounter notifications to a consumer app via Websockets.
+- ? Encounter notifications to a consumer app via Websockets.
 - ? Encounter notifications to a consumer app via Server Side Events (SSE).
 - ? Define a new topic as a change notification to a resource.
 - ? Work with authentication
@@ -20,9 +20,9 @@ For clarity in this document, the following words are defined as follows:
 - Server: System or device **sending** notifications.
 - Trigger Server: System generating messages which **cause** notifications.
 
-Each scenario will include three components which will be provided.  The client and
-server components will be of interest for testing, while the Trigger Server is an
-artifact needed to run the scenarios.
+Each scenario will include the above three tiers of components.  For each 
+scenario, reference implementations for the Server and Client will be provided, 
+as well as an implementation of the Trigger Server.
 
 - Server Proxy
 
@@ -42,8 +42,11 @@ artifact needed to run the scenarios.
 
 - Trigger Server
 
-    This system received information from a client about what type of messages to
+    This system receives information from a client about what type of messages to
     generate, then creates messages and sends them to a FHIR server.
+
+    This component is an artefact of testing.  While source code is provided, a
+    typical scenario will be generating events from another source.
 
     Link to GitHub Project: 
 
