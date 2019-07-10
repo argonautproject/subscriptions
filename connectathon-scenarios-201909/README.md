@@ -159,7 +159,7 @@ implementation.
   - Once
   - Periodic
 
-## Scenario 3: Patient Encounter notifications to an app via Websockets
+## Potential Scenario: Patient Encounter notifications to an app via Websockets
 
 #### Subscription Information
 
