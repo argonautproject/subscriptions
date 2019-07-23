@@ -5,7 +5,7 @@ Connectathon, testing the draft changes to the Subscriptions framework.
 The track is designed for clients and servers that want to try out a full
 specturm of integration from:
 
-1. Patient Encounter notifications to a consumer app via REST-Hook.
+1. [Patient Encounter notifications to a consumer app via REST-Hook](#scenario-1).
 2. Group Encounter notifications to an intermediary or clearing house via REST-Hook.
 - ? Patient Encounter notifications to an app via Websockets.
 - ? Patient Encounter notifications to an app via Server Side Events (SSE).
@@ -55,7 +55,8 @@ implementation.
 
     Link to GitHub Project: 
 
-## Scenario 1: Patient Encounter notifications to a consumer app via REST-Hook
+
+## <a name='scenario-1'>Scenario 1: Patient Encounter notifications to a consumer app via REST-Hook</a>
 
 #### Subscription information
 
