@@ -6,7 +6,7 @@ The track is designed for clients and servers that want to try out a full
 specturm of integration from:
 
 1. [Patient Encounter notifications to a consumer app via REST-Hook](#scenario-1).
-2. Group Encounter notifications to an intermediary or clearing house via REST-Hook.
+2. [Group Encounter notifications to an intermediary or clearing house via REST-Hook](#scenario-2).
 - ? Patient Encounter notifications to an app via Websockets.
 - ? Patient Encounter notifications to an app via Server Side Events (SSE).
 - ? Define a new topic as a change notification to a resource.
@@ -56,7 +56,7 @@ implementation.
     Link to GitHub Project: 
 
 
-## <a name='scenario-1'>Scenario 1: Patient Encounter notifications to a consumer app via REST-Hook</a>
+## <a name='scenario-1'>Scenario 1</a>: Patient Encounter notifications to a consumer app via REST-Hook
 
 #### Subscription information
 
@@ -107,7 +107,7 @@ implementation.
   - Periodic
 
 
-## Scenario 2: Group Encounter notifications to an intermediary or clearing house via REST-Hook
+## <a name='scenario-2'>Scenario 2</a>: Group Encounter notifications to an intermediary or clearing house via REST-Hook
 
 #### Subscription Information
 
