@@ -56,7 +56,7 @@ implementation.
     Link to GitHub Project: 
 
 
-## <a name='scenario-1'>Scenario 1</a>: Patient Encounter notifications to a consumer app via REST-Hook
+## <a name='scenario-1'>Scenario 1</a>: Single-Patient Encounter notifications via REST-Hook (e.g. to a consumer app)
 
 #### Subscription information
 
