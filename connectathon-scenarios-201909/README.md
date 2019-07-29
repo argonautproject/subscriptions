@@ -114,7 +114,7 @@ implementation.
 - Topic: `admission`
 - Allowed filters: `member-of-group`/`:in`
 - Allowed channel types: `REST-Hook`
-- Allowed payloads: `Ping`, `ID-only`, `Full`
+- Allowed payloads: `Ping`, `ID-only`
 
 #### Workflow [(Diagram)](https://github.com/microsoft-healthcare-madison/argo-subscription-docs/blob/master/IntermediaryWorkflows/svg/GenericGroup.svg)
 
@@ -176,7 +176,7 @@ implementation.
 - Topic: `admission`
 - Allowed filters: `Patient`
 - Allowed channel types: `Server-Side-Events`
-- Allowed payloads: `Ping`, `ID-only`, `Full`
+- Allowed payloads: `Ping`, `ID-only`
 
 
 ## Potential Scenario: Define a new topic as a change notification to a resource
@@ -193,11 +193,11 @@ implementation.
 - Topic: `admission`
 - Allowed filters: `Patient`
 - Allowed channel types: `REST-Hook`
-- Allowed payloads: `Ping`, `ID-only`, `Full`
+- Allowed payloads: `Ping`, `ID-only`
 
 ## Potential Scenario: Work with authentication (Websocket)
 
 - Topic: `admission`
 - Allowed filters: `Patient`
 - Allowed channel types: `Websocket`
-- Allowed payloads: `Ping`, `ID-only`, `Full`
+- Allowed payloads: `Ping`, `ID-only`
