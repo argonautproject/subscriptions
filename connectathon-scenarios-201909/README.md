@@ -63,20 +63,21 @@ implementation.
 - Topic: `admission`
 - Allowed filters: `Patient`
 - Allowed channel types: `REST-Hook`
-- Allowed payloads: `Ping`, `ID-only`, `Full`
+- Allowed payloads: `Ping`, `ID-only`
 
 #### Workflow [(Diagram)](https://github.com/microsoft-healthcare-madison/argo-subscription-docs/blob/master/RegistrationWorkflows/svg/Basic.svg)
 
 1. (Optional) Client requests list of Topic resources from the server.
 2. Server responds with list of Topic resources.
-3. Client determines which Patient the Subscription will be filtered on.
-4. Client creates a REST endpoint to receive notifications on.
-5. Client sends Subscription request to Server.
-6. Server responds with status: requested.
-7. Server tests the REST endpoint.
-8. Server updates the Subscription to status: active.
-9. Trigger Server sends Encounter for specified patient.
-10. Server sends event notification to client REST endpoint.
+3. Client Selects or Creates the Patient this subscription will be filtered on.
+4. Client determines which Patient the Subscription will be filtered on.
+5. Client creates a REST endpoint to receive notifications on.
+6. Client sends Subscription request to Server.
+7. Server responds with status: requested.
+8. Server tests the REST endpoint.
+9. Server updates the Subscription to status: active.
+10. Trigger Server sends Encounter for specified patient.
+11. Server sends event notification to client REST endpoint.
 
 #### Client Information
 
