@@ -61,9 +61,9 @@ implementation.
 #### Subscription information
 
 - Topic: `admission`
-- Allowed filters: `Patient`
-- Allowed channel types: `REST-Hook`
-- Allowed payloads: `Ping`, `ID-only`
+- Allowed filters: `patient`
+- Allowed channel types: `rest-hook`
+- Allowed payloads: `empty`, `id-only`
 
 #### Workflow [(Diagram)](https://github.com/microsoft-healthcare-madison/argo-subscription-docs/blob/master/RegistrationWorkflows/svg/Basic.svg)
 
@@ -114,8 +114,8 @@ implementation.
 
 - Topic: `admission`
 - Allowed filters: `member-of-group`/`:in`
-- Allowed channel types: `REST-Hook`
-- Allowed payloads: `Ping`, `ID-only`
+- Allowed channel types: `rest-hook`
+- Allowed payloads: `empty`, `id-only`
 
 #### Workflow [(Diagram)](https://github.com/microsoft-healthcare-madison/argo-subscription-docs/blob/master/IntermediaryWorkflows/svg/GenericGroup.svg)
 
@@ -168,7 +168,7 @@ implementation.
 - Topic: `admission`
 - Allowed filters: `Patient`
 - Allowed channel types: `Websocket`
-- Allowed payloads: `Ping`, `ID-only`, `Full`
+- Allowed payloads: `empty`, `id-only`, `full-resource`
 
 ## Potential Scenario: Patient Encounter notifications to an app via Server Side Events (SSE)
 
@@ -177,7 +177,7 @@ implementation.
 - Topic: `admission`
 - Allowed filters: `Patient`
 - Allowed channel types: `Server-Side-Events`
-- Allowed payloads: `Ping`, `ID-only`
+- Allowed payloads: `empty`, `id-only`, `full-resource`
 
 
 ## Potential Scenario: Define a new topic as a change notification to a resource
@@ -194,11 +194,11 @@ implementation.
 - Topic: `admission`
 - Allowed filters: `Patient`
 - Allowed channel types: `REST-Hook`
-- Allowed payloads: `Ping`, `ID-only`
+- Allowed payloads: `empty`, `id-only`, `full-resource`
 
 ## Potential Scenario: Work with authentication (Websocket)
 
 - Topic: `admission`
 - Allowed filters: `Patient`
 - Allowed channel types: `Websocket`
-- Allowed payloads: `Ping`, `ID-only`
+- Allowed payloads: `empty`, `id-only`, `full-resource`
