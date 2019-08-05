@@ -14,46 +14,53 @@ specturm of integration from:
     - REST-Hook
     - Websockets
 
+
 For clarity in this document, the following words are defined as follows:
 
 - Client: System or device **receiving** notifications.
 - Server: System or device **sending** notifications.
-- Trigger Server: System generating messages which **cause** notifications.
+- Trigger: System or device generating messages which **cause** notifications.
 
-Each scenario will include the above three tiers of components.  For each 
-scenario, reference implementations for the Server and Client will be provided, 
-as well as an implementation of the Trigger Server.  It is intented that an
-interested party can replace any portion of the running scenario with their own 
-implementation.
+Implementation Note:
 
-- Server Proxy
+    While efforts have been made to make the reference implementations look and feel
+    realistic, they are NOT production-ready code.
 
-    This system sits in front of a FHIR R4 Server and intercepts all calls relating 
-    to these scenarios.  It handles triggering and sending notifications via the 
-    specified channels to clients.  This was done to highlight the areas needed to 
-    implement the Server portion of Subscription handling.
+    All samples are provided without warranty of any kind.
+
+Each scenario will include three tiers of components.  Specifically, the scenarios use:
+- Server Proxy: [GitHub](https://github.com/microsoft-healthcare-madison/argonaut-subscription-server-proxy)
+
+    This is a server system (.Net Core CLI with Kestrel Http Server) which sits in front
+    of a FHIR R4 Server and intercepts all calls relating to the scenarios. It handles 
+    processing events and sending notifications via the specified channels to clients. 
+    This was done to highlight the areas needed to implement the Server portion of Subscription handling.
 
     An implementer may choose to take a similar approach (of proxying calls), or may
     use a modified server directly.  Either option should result in the same behavior.
 
-    Link to GitHub Project: 
+- Client UI: [GitHub](https://github.com/microsoft-healthcare-madison/argonaut-subscription-client-ui)
 
-- Client
+    This is a user interface project (React-based Web Application) which walks a user
+    through the scenarios.  It includes everything that a client application would need
+    to maintain subscriptions.
 
-    This system creates channel endpoints, generates subscription requests, listens
-    for notifications, and provides UI notification to a user.
+    Because a Web Application cannot host its own endpoints, while WebSocket scenarios
+    interact directly with the Server, REST endpoints are hosted in a Client Host project
+    and communication between the UI and Host is handled via WebSockets.
 
-    Link to GitHub Project:
 
-- Trigger Server
+- Client Host: [GitHub](https://github.com/microsoft-healthcare-madison/argonaut-subscription-client)
 
-    This system receives information from a client about what type of messages to
-    generate, then creates messages and sends them to a FHIR server.
+    This is a server system (.Net Core CLI with Kestrel Http Server) which:
+    - hosts the UI (if desired)
+    - manages REST endpoints
+    - communicates received REST notifications to the Client UI
+    - Triggers events on the server (e.g., sends Encounter resources).
 
-    This component is an artefact of testing.  While source code is provided, a
-    typical scenario will be generating events from another source.
-
-    Link to GitHub Project: 
+    Generally, this project is an artefact of testing.  However, implementers may be 
+    interested in details about how the UI interacts with notifications or how REST endpoints
+    are managed.
 
 
 ## <a name='scenario-1'>Scenario 1</a>: Single-Patient Encounter notifications via REST-Hook (e.g. to a consumer app)
@@ -65,24 +72,32 @@ implementation.
 - Allowed channel types: `rest-hook`
 - Allowed payloads: `empty`, `id-only`
 
-#### Workflow [(Diagram)](https://github.com/microsoft-healthcare-madison/argo-subscription-docs/blob/master/RegistrationWorkflows/svg/Basic.svg)
+#### Workflow - [Diagram](https://github.com/microsoft-healthcare-madison/argo-subscription-docs/blob/master/connectathon-scenarios-201909/svg/Scenario1_workflow.svg) - [Simplified Graph](https://github.com/microsoft-healthcare-madison/argo-subscription-docs/blob/master/connectathon-scenarios-201909/svg/Scenario1_graph.svg)
 
-1. (Optional) Client requests list of Topic resources from the server.
-2. Server responds with list of Topic resources.
-3. Client Selects or Creates the Patient this subscription will be filtered on.
-4. Client determines which Patient the Subscription will be filtered on.
-5. Client creates a REST endpoint to receive notifications on.
-6. Client sends Subscription request to Server.
-7. Server responds with status: requested.
-8. Server tests the REST endpoint.
-9. Server updates the Subscription to status: active.
-10. Trigger Server sends Encounter for specified patient.
-11. Server sends event notification to client REST endpoint.
+- Optional Topic Discovery:
+    - Client requests list of Topic resources from the server.
+    - Server responds with list of Topic resources.
+1. Select or Create a Patient:
+    - Selecting an existing Patient:
+        1. Client asks User for Search Information related to a Patient or information to Create a Patient.
+        2. Client asks Server for a list of matching patients.
+        3. User selects a patient to use in the Scenario.
+    - Creating a Patient:
+        1. Client asks Users for Patient Information.
+        2. Client Creates Patient record on the Server.
+2. Client creates a REST endpoint to receive notifications on.
+3. Client sends Subscription request to Server.
+4. Server responds with status: `requested`.
+5. Server sends Handshake message to the REST endpoint.
+6. If successful, Server updates the Subscription to status: `active`.
+7. Trigger Server sends Encounter for selected patient.
+8. Server sends event notification to client REST endpoint.
+9. Client Notifies user that a notification has been received.
 
 #### Client Information
 
 - (Optional) Implement Topic discovery
-- Determine filter for Encounter based on Patient (id)
+- Either allow searching/selecting or creating a Patient
 - Create a REST endpoint
 - Send a Subscription request to the server
 - Handle Subscription REST Handshake

@@ -1,0 +1,41 @@
+title Scenario 1 Workflow
+
+participantspacing 7
+
+participant Server
+participant Client
+
+group Optional: Prior to Subscription
+  note right of Server:Server implements Topics,\n which includes the list of\nvalid filters for each Topic.
+
+  Client->Server:Request list of Topic Resources
+  Server-->Client:List of supported Topic Resources
+end
+
+alt Select Existing Patient
+  note over Client:Ask User for criteria
+  Client->Server:Ask for Patients
+  Server-->Client:List of matching patients
+  note over Client:User selects a patient
+else Create New Patient
+  note over Client:Ask User for Patient Information
+  Client->Server:Create Patient
+  Server-->Client:Patient Information (created)
+end
+
+note over Client:Client creates endpoint\nto listen for notifications.
+
+participant Client Endpoint
+Client-->*Client Endpoint:
+
+Client->Server:Create Subscription\n - Topic: 'admissions'\n - Filter: Patient/<id>\n - Payload: 'empty' | 'id-only'\n - Endpoint: '...endpoints/<urlPart>'
+note right of Server:Create subscription record\n - State: 'requested'
+Server-->Client:HTTP 201 (Created):\n - State: 'requested'\n - Identifier: 'sub_id'
+
+Server->Client Endpoint:Handshake:\n - bundle.meta.eventCount: 0\n - bundle.meta.status: 'requested'\n - bundle.meta.topicUrl: <URL for admissions on Server>\n - bundle.meta.subscriptionUrl: <URL for this subscription on Server>
+Client Endpoint-->Server:HTTP 202 (Accepted)
+
+note right of Server:Change subscription state to 'active'
+
+note over Client:Trigger Event
+Server->Client Endpoint: Notification:\n - bundle.meta.eventCount: 1\n - bundle.meta.status: 'active'\n - bundle.meta.topicUrl: <URL for admissions on Server>\n - bundle.meta.subscriptionUrl: <URL for this subscription on Server>\n - bundle.entry: <payload>

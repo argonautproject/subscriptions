@@ -1,11 +1,17 @@
 # argo-subscription-docs
 Home for controlled versions of documents related to Argonaut Subscriptions
 
-## Notes on Workflow Directories:
+## Notes on Workflows:
 
-- Intended for use with https://sequencediagram.org/ .
+- Intended for use with: [SequenceDiagram](https://sequencediagram.org/).
 - Text files with workflow diagram contents.
 - SVG renders of the workflows.
+
+## Notes on Graphs:
+
+- Intended for use with: [Mermaid](http://knsv.github.io/mermaid/#/).
+- Text files with graph contents.
+- SVG renders of the graphs.
 
 ## Client Workflows
 
