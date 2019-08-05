@@ -21,13 +21,6 @@ For clarity in this document, the following words are defined as follows:
 - Server: System or device **sending** notifications.
 - Trigger: System or device generating messages which **cause** notifications.
 
-Implementation Note:
-
-    While efforts have been made to make the reference implementations look and feel
-    realistic, they are NOT production-ready code.
-
-    All samples are provided without warranty of any kind.
-
 Each scenario will include three tiers of components.  Specifically, the scenarios use:
 - Server Proxy: [GitHub](https://github.com/microsoft-healthcare-madison/argonaut-subscription-server-proxy)
 
