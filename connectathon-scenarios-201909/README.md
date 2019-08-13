@@ -13,6 +13,8 @@ specturm of integration from:
 - ? Work with authentication
     - REST-Hook
     - Websockets
+- ? Multiple Notifications in a single bundle
+- ? Explore _include on Topics
 
 
 For clarity in this document, the following words are defined as follows:
@@ -103,7 +105,7 @@ Each scenario will include three tiers of components.  Specifically, the scenari
 - Manage Subscriptions
   - Accept Subscription requests
   - Validate REST-Hook channel endpoints
-- Accept Encounter resources (to trigger events)
+- Have some way of triggering events (e.g., accepting Encounter resources)
 - Filter and match for applicable Subscriptions
 - Send event notifications
 
@@ -121,7 +123,7 @@ Each scenario will include three tiers of components.  Specifically, the scenari
 #### Subscription Information
 
 - Topic: `admission`
-- Allowed filters: `member-of-group`/`:in`
+- Allowed filters: `:in`
 - Allowed channel types: `rest-hook`
 - Allowed payloads: `empty`, `id-only`
 
