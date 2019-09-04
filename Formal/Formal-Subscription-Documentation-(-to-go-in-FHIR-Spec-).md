@@ -560,7 +560,7 @@ Subscription's logical id for use in subsequent operations.
 
 When the server receives a subscription, it SHOULD check that it is
 prepared to accept/process the subscription. If it is, it sets the
-subscription to either `requested` and process it like a normal
+subscription to `requested` and process it like a normal
 [create](http.html#create). If it isn't, it SHOULD return an error with
 an [OperationOutcome](operationoutcome.html) instead of processing the
 `create`.
