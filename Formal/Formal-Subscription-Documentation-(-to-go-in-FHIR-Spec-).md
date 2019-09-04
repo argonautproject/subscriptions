@@ -148,8 +148,7 @@ itself.
 When deciding which payload type to request, the client should consider
 both ease in processing and security of PHI. If any untrusted hosts are
 included in processing notifications, it is *STRONGLY* recommended to
-use an `empty` payload to protect confidential health
-    information.
+use an `empty` payload to protect confidential health information.
 
 Examples:
 
@@ -165,8 +164,17 @@ Examples:
 
 ### REST Hook
 
-When a topic meets the criteria, the server POSTs an event
-notification to the client's nominated endpoint URL (i.e. to the `Subscription.channel[type=rest-hook].endpoint`) as shown in the following examples.
+When a Subscription is created for a REST Hook channel type, the server MUST set initial
+status to `requested`, pending verification of the nominated endpoint URL.  After a
+successful handshake notification has been sent and accepted, the server MUST update
+the status to `active`.  Any errors in the initial handshake MUST result in the status
+being changed to `error`.
+
+When the server processes an event meeting the specified criteria, the server POSTs an event
+notification to the client's nominated endpoint URL (i.e. to the 
+`Subscription.channel[type=rest-hook].endpoint`) as shown in the following examples.
+The content-type of the POST MUST match the contentType (Subscription.channel.payload.contentType) 
+requested during creation of the Subscription.
 Note that the server must append the headers, if any are given, to the
 POST request that it makes to the client.
 
@@ -415,6 +423,15 @@ for notifications:
   - Server sends a "ping :id" message to notify the client each time a
     new result is available
 
+    
+<span id="dstu"></span>
+
+> **STU Note:** Warning: The WebSocket channel type is being examined
+> to provide functional parity with other channel types.  In particular,
+> the current system fails to address authentication and a desire for 
+> multiple subscriptions to be available to a single WebSocket connection.
+> More work is required.
+
 <span id="sms"></span>
 
 ### Email/SMS
@@ -517,7 +534,7 @@ white-listed prior to allowing these kinds of subscriptions.
 
 ## Safety and Security
 
-Executing each of the channels documented below involves the server
+Executing each of the channels documented in this specification involves the server
 sending a communication that will reveal information about the client
 and server relationship, and, if the entire resource is sent,
 administrative or clinical information that may be quite sensitive
@@ -543,7 +560,7 @@ Subscription's logical id for use in subsequent operations.
 
 When the server receives a subscription, it SHOULD check that it is
 prepared to accept/process the subscription. If it is, it sets the
-subscription to `active`, and then process it like a normal
+subscription to either `requested` and process it like a normal
 [create](http.html#create). If it isn't, it SHOULD return an error with
 an [OperationOutcome](operationoutcome.html) instead of processing the
 `create`.
@@ -553,7 +570,7 @@ created it, such as access to patient compartments etc. Note that the
 subscription remains active after the client access tokens expire.
 
 Once the server has activated the subscription, it sets the status to
-"active" (note: the server can do this as it accepts the resource if it
+`active` (note: the server may do this as it accepts the resource if it
 wants).
 
 An appropriately authorized client can use search and/or history
@@ -563,10 +580,11 @@ subscription from the server.
 
 The server may retry the notification a fixed number of times and/or
 refer errors to its own alert logs. If the notification fails, the
-server should set the status to 'error' and mark the error in the
+server should set the status to `error` and mark the error in the
 resource. If the notification succeeds, the server should update the
-status to "active again. If a subscription fails consistently a server
-may choose set the subscription status to off and stop trying to send
+status to `active` and may remove any error codes. If a subscription 
+fails consistently a server
+may choose set the subscription status to `off` and stop trying to send
 notifications.
 
 If a subscription nominates a fixed end date, the server automatically
