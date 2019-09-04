@@ -1,0 +1,28 @@
+title Delayed Failure (long)
+
+participant Server
+participant Endpoint
+
+Server ->Endpoint: Event 1: Active
+Server ->Endpoint: Event 2: Active
+
+
+Server -#redx(10)Endpoint: Event 3: Active
+
+space -14
+
+note right of Endpoint: Out of order message detected
+
+Server ->Endpoint: Event 4: Active
+
+Server ->Endpoint: Event 5: Active
+
+space 2
+
+==Inconsistency Timeout==
+
+note right of Endpoint: Rebuild due to missing event.
+
+Server ->Endpoint: Event 6: Error
+
+note right of Endpoint: Rebuild due to error

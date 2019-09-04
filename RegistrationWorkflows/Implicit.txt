@@ -1,0 +1,16 @@
+title Implicit Subscription Registration Workflow
+
+participant EHR
+participant Payer Endpoint
+
+note right of EHR: Out of band communication tells the server\nof a Topic/Endpoint/Filter combination of interest.\nFor example:\n - Topic: **Admission**\n - Endpoint: **http://payer.com/fhir/endpoints/admissions**\n - Filter: **Member of Group: Payer**
+
+note right of EHR:Create subscription record\n - State: 'requested'
+
+EHR->Payer Endpoint: Handshake request:\nIs this a valid notification endpoint?
+
+Payer Endpoint-->EHR:Acknowledge
+
+note right of EHR:Change subscription state to 'active'
+
+EHR->Payer Endpoint: Notifications...

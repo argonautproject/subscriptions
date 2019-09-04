@@ -1,8 +1,0 @@
-{
-  "resourceType": "EventFilter",
-  "id": "by-patient",
-  "name": "by-patient",
-  "condition": {
-    "expression": "this.subject = %patientId"
-  }
-}

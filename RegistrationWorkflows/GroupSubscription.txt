@@ -1,0 +1,32 @@
+title Group Subscription Registration Workflow
+
+participantspacing 7
+
+participant ABC Hospital
+participant Payer
+
+group Prior to Subscription
+note right of ABC Hospital:Server implements Topics,\n which includes the list of\nvalid filters for each Topic.
+
+Payer->ABC Hospital:Request list of Topic Resources
+ABC Hospital-->Payer:List of supported Topic Resources
+end
+
+note over Payer:Payer determines\nwhich Topic covers\ndesired notifications.
+
+note over Payer:Payer creates endpoint\nfor admissions for at Hospital ABC
+
+participant Payer Endpoint ABC
+Payer-->*Payer Endpoint ABC:
+
+Payer->ABC Hospital:Create Subscription\n - Topic: 'admissions'\n - Filter: Patient is member of group 'payer'\n - Payload: 'id-only'\n - Endpoint: 'payer/fhir/endpoints/ABC'
+
+note right of ABC Hospital:Create subscription record\n - State: 'requested'
+
+ABC Hospital-->Payer:Acknowledge (401):\n - State: 'requested'\n - Identifier: 'subscription_123'
+
+ABC Hospital->Payer Endpoint ABC: Handshake request:\nIs this a valid notification endpoint\nfor id: 'subscription_123'?
+
+Payer Endpoint ABC-->ABC Hospital:Acknowledge
+
+note right of ABC Hospital:Change subscription state to 'active'

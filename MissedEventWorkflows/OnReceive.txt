@@ -1,0 +1,20 @@
+title Detecting Missed Events - On Receive
+
+participant Client
+participant Server
+
+Server -> Client: Subscription 'p_123', event 20
+
+entryspacing 2
+Server -> Client: Subscription 'p_123', event 21
+
+entryspacing 2
+Server -> Client: Subscription  'p_123', event 23
+
+entryspacing 3
+
+note right of Client: Determines event 22 is missing
+
+Client -> Server: Request: Subscription 'p_123', event 22
+entryspacing 1
+Server --> Client: Subscription 'p_123', event 22

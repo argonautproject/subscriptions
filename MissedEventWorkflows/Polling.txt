@@ -1,0 +1,22 @@
+title Detecting Missed Events - Polling
+
+participant Client
+participant Server
+
+Server -> Client: Subscription 'p_123', event 20
+
+entryspacing 3
+
+note right of Client: Too much time has elapsed without\na new event...
+
+Client -> Server: Request: Subscription 'p_123' information
+entryspacing 1
+Server --> Client: Subscription 'p_123'\n - State: **Error**\n - EventCount: **22**
+
+entryspacing 2
+
+Client -> Server: Request: Subscription 'p_123', State to Active
+
+Client -> Server: Request: Subscription 'p_123', event 21
+
+Client -> Server: Request: Subscription 'p_123', event 22

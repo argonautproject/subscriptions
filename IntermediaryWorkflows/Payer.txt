@@ -1,0 +1,28 @@
+title Intermediary Workflow
+
+participant EHR
+participant Intermediary
+participant Payer
+
+parallel
+
+Intermediary ->EHR: Create subscription:\n - Topic: **admission**\n - Filter: **NONE**
+
+Payer -> Intermediary: Create subscription:\n - Topic: **admission**\n - Filter: **Member of Group: Payer**
+
+parallel off
+
+
+EHR -> Intermediary: Admissions Event:\n - Patient: John Doe\n - Identifier: 123\n - DOB: 1/1/1970
+
+note over Intermediary: John Doe, 123, 1/1/1970\nAdded to patient internal matching.
+
+note over Intermediary: Search patient matching for matches...
+
+note over Intermediary: Patient is member of group **Payer**
+
+Intermediary ->Payer: Admissions Event:\n - From: **EHR**\n - Patient: **123**
+
+Payer->Intermediary: Request Details for **Patient:123**
+
+Intermediary -->Payer: Full Patient Resource

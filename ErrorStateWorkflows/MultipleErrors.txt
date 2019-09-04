@@ -1,0 +1,19 @@
+title Multiple Failures
+
+participantspacing 5
+participant Server
+participant Endpoint
+
+Server ->Endpoint: Event 1: Active
+Server ->Endpoint: Event 2: Active
+
+
+Server -#redx(10) Endpoint: Event 3: Active
+
+space -9
+Server -#redx Endpoint: Event 4: Active
+
+Server -#redx Endpoint: Event 5: Error
+
+space 
+Server ->Endpoint: Event 6: Error

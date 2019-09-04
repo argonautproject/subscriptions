@@ -1,0 +1,48 @@
+title Delayed Delivery
+
+participantspacing 4
+
+participantgroup #e5e5e5 EHR 
+participant Main
+participant Matching
+participant Queue
+end
+
+participant Endpoint
+
+autonumber 1
+Main -#0000ff>Matching: Event
+activate Matching #0000ff
+
+Main -#00ff00>Matching: Event
+Matching -#0000ff>Queue: Event
+deactivate Matching
+activate Matching #00ff00
+activate Queue #0000ff
+
+Main -#ff0000>Matching: Event
+Matching -#00ff00>Queue: Event
+deactivate Matching
+activate Matching #ff0000
+Queue -#0000ff>Endpoint: Notification
+deactivate Queue
+activate Queue #00ff00
+
+Main -#ffff00>Matching: Event
+Matching -#ff0000>Queue: Event
+deactivate Matching
+activate Matching #ffff00
+
+Main -#00ffff>Matching: Event
+Queue -#00ff00>Endpoint: Notification
+deactivate Queue
+activate Queue #ff0000
+Matching -#ffff00>Queue: Event
+deactivate Matching
+activate Matching #00ffff
+
+Queue -#ff0000xEndpoint: Notification
+deactivate Queue
+activate Queue #ffff00
+
+autonumber off

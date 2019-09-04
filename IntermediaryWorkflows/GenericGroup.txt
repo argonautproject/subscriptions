@@ -1,0 +1,28 @@
+title Intermediary Workflow
+
+participant Server
+participant Intermediary
+participant Client
+
+parallel
+
+Intermediary ->Server: Create subscription:\n - Topic: **admission**\n - Filter: **NONE**
+
+Client -> Intermediary: Create subscription:\n - Topic: **admission**\n - Filter: **Member of Group: MyGroup**
+
+parallel off
+
+
+Server -> Intermediary: Admissions Event:\n - Patient: John Doe\n - Identifier: 123\n - DOB: 1/1/1970
+
+note over Intermediary: John Doe, 123, 1/1/1970\nAdded to patient internal matching.
+
+note over Intermediary: Search patient matching for matches...
+
+note over Intermediary: Patient is member of group **MyGroup**
+
+Intermediary ->Client: Admissions Event:\n - From: **Server**\n - Patient: **123**
+
+Client->Intermediary: Request Details for **Patient:123**
+
+Intermediary -->Client: Full Patient Resource

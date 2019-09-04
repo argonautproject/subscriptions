@@ -1,8 +1,0 @@
-{
-  "resourceType": "EventFilter",
-  "id": "by-gp",
-  "name": "by-gp",
-  "condition": {
-    "expression": "this.subject.generalPractitioner = %practitionerId"
-  }
-}
