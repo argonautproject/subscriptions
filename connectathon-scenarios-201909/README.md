@@ -67,7 +67,7 @@ Each scenario will include three tiers of components.  Specifically, the scenari
 - Allowed channel types: `rest-hook`
 - Allowed payloads: `empty`, `id-only`
 
-#### Workflow - [Diagram](https://github.com/microsoft-healthcare-madison/argo-subscription-docs/blob/master/connectathon-scenarios-201909/svg/Scenario1_workflow.svg) - [Simplified Graph](https://github.com/microsoft-healthcare-madison/argo-subscription-docs/blob/master/connectathon-scenarios-201909/svg/Scenario1_graph.svg)
+#### Workflow - [Diagram](https://github.com/argonautproject/subscriptions/blob/master/connectathon-scenarios-201909/svg/Scenario1_workflow.svg) - [Simplified Graph](https://github.com/argonautproject/subscriptions/blob/master/connectathon-scenarios-201909/svg/Scenario1_graph.svg)
 
 - Optional Topic Discovery:
     - Client requests list of Topic resources from the server.
@@ -127,7 +127,7 @@ Each scenario will include three tiers of components.  Specifically, the scenari
 - Allowed channel types: `rest-hook`
 - Allowed payloads: `empty`, `id-only`
 
-#### Workflow [(Diagram)](https://github.com/microsoft-healthcare-madison/argo-subscription-docs/blob/master/IntermediaryWorkflows/svg/GenericGroup.svg)
+#### Workflow [(Diagram)](https://github.com/argonautproject/subscriptions/blob/master/IntermediaryWorkflows/svg/GenericGroup.svg)
 
 
 #### Client Information
