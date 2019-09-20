@@ -1,4 +1,4 @@
-# Backporting R5 Subscriptions to R4
+# Back-porting R5 Subscriptions to R4
 
 The introduction of Topic-based Subscriptions targets FHIR R5, and marks a significant set of improvements to R4 Subscriptions.  Still, given that FHIR R5 will not be published until roughly early 2021 (and implementation will lag further), it's useful to define a standard way to "back-port" R5 Subscriptions functionality to FHIR R4.  This way, implementers invested in R4 can add Topic-based Subscriptions as an "à la carte" feature, gaining value early and laying a clear transition path.
 
@@ -28,7 +28,7 @@ Clients interact with the create/update/delete API for `Basic`, interacting with
 
 * Subscription "search all" is implemented via `GET Basic?code=R5Subscription` or `GET Basic?code=R5Subscription&patient=[id]`. Fine-grained search MAY be supported with custom search parameters that index the `valueString` JSON, using definitions from http://build.fhir.org/subscription.html#search
 
-### Additiona Subscription mechanics
+### Additions Subscription mechanics
 
 The rest of subscription mechanics work as in R5. Namely:
 
