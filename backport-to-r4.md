@@ -28,7 +28,7 @@ Clients interact with the create/update/delete API for `Basic`, interacting with
 
 * Subscription "search all" is implemented via `GET Basic?code=R5Subscription` or `GET Basic?code=R5Subscription&patient=[id]`. Fine-grained search MAY be supported with custom search parameters that index the `valueString` JSON, using definitions from http://build.fhir.org/subscription.html#search
 
-### Additions Subscription mechanics
+### Additional Subscription mechanics
 
 The rest of subscription mechanics work as in R5. Namely:
 
