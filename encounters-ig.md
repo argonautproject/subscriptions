@@ -74,17 +74,10 @@ has started a new encounter.
 For example, a physician receiving notifications that one of their patients is being seen
 by another physician or organization.
 
-- Workflow admit notifications (e.g., any patient has been admitted to the NICU)
-  - Is this something we want?  I believe this is out of scope for our discussions
-    but I don't know if the IG should touch on things like this.
-
-  - Simpler if we define filters on more fields.
-  - Possible by receiving the notifications and filtering at receiver level.
-
 - Discharge use cases
   - Should these mirror admission use cases?  Haven't really discussed.
 
-## Define Canonical Topics (admission + discharge)
+## Define Canonical Topics (Encounter Start + Encounter End)
 
 - Draft current topic, use `=` and `:in` only to start.
 - Question: do we want to allow filters on any other fields (e.g., encounter class?)
@@ -92,6 +85,19 @@ by another physician or organization.
 
 - Question: what does this look like? Is this a profile with everything constrained,
   or just a resource (e.g., example) filled out?
+
+## Explain Topic derivation
+
+Require servers to support searching on Topic.derivedFromCanonical and/or Topic.derivedFromUri.
+
+Explain that servers are encouraged to add additional filters, but cannot remove existing
+ones nor change the 'concept' of a Topic during derivation.
+
+For example:
+  - A server wanting to expose the same Topic, but with a different computable definition is OK.
+  - A server wanting to expose additional canFilterBy parameters is OK.
+  - A server wanting to remove an existing canFilterBy parameter is NOT ok.
+  - A server wanting to derive a Topic based on a different resource is NOT ok (e.g., start/end of medication derived from encounter).
 
 ## Define bundle used in notifications
 
