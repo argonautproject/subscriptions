@@ -48,7 +48,7 @@ The event source (`EventDefinition`) here is a named `admission` event that requ
 }
 ```
 
-## Now apply them in a a patient-focused Subscription:
+## Now apply them in a patient-focused Subscription:
 
 ```json
 {
