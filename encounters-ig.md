@@ -79,12 +79,57 @@ by another physician or organization.
 
 ## Define Canonical Topics (Encounter Start + Encounter End)
 
-- Draft current topic, use `=` and `:in` only to start.
-- Question: do we want to allow filters on any other fields (e.g., encounter class?)
-  - Want to be simple, but also want to be generically useful
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Topic xmlns="http://hl7.org/fhir">
+	<id value="encounter-start"/>
+	<url value="http://argonautproject.org/encounters-ig/Topic/encounter-start"/>
+	<title value="encounter-start"/>
+	<status value="active"/>
+	<resourceTrigger>
+		<description value="Beginning of a clinical encounter"/>
+		<resourceType value="Encounter"/>
+		<queryCriteria>
+			<previous value="status:not=in-progress"/>
+			<current value="status=in-progress"/>
+			<requireBoth value="true"/>
+		</queryCriteria>
+		<fhirPathCriteria value="%previous.status!='in-progress' and %current.status='in-progress'"/>
+	</resourceTrigger>
+	<canFilterBy>
+		<name value="patient"/>
+		<matchType value="=" />
+		<matchType value="in" />
+		<documentation value="Matching based on the Patient (subject) of an Encounter or based on the Patient's group membership (in)."/>
+	</canFilterBy>
+</Topic>
+```
 
-- Question: what does this look like? Is this a profile with everything constrained,
-  or just a resource (e.g., example) filled out?
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Topic xmlns="http://hl7.org/fhir">
+	<id value="encounter-end"/>
+	<url value="http://argonautproject.org/encounters-ig/Topic/encounter-end"/>
+	<title value="encounter-end"/>
+	<status value="active"/>
+	<resourceTrigger>
+		<description value="End of a clinical encounter"/>
+		<resourceType value="Encounter"/>
+		<queryCriteria>
+			<previous value="status=in-progress"/>
+			<current value="status:not=in-progress"/>
+			<requireBoth value="true"/>
+		</queryCriteria>
+		<fhirPathCriteria value="%previous.status='in-progress' and %current.status!='in-progress'"/>
+	</resourceTrigger>
+	<canFilterBy>
+		<name value="patient"/>
+		<matchType value="=" />
+		<matchType value="in" />
+		<documentation value="Matching based on the Patient (subject) of an Encounter or based on the Patient's group membership (in)."/>
+	</canFilterBy>
+</Topic>
+```
 
 ## Explain Topic derivation
 
@@ -105,12 +150,10 @@ For example:
 - Extensions (on meta)
 - Contents based on payload
 
-- Question: is this a profile (StructureDefinition) on `Bundle` that we link to?
-
 ## Define Profile on Subscriptions (channel, payload, etc)
 
 - Must support for channel=`rest-hook`, payload={`empty`, `id-only`}
-- Question: again, is this a profile (StructureDefinition) on `Subscription` that we link to?
+- Subscription End (instant) should be required (and no more than ?? 1 Month ??)
 
 ## Worked examples for end-to-end exchange
 
