@@ -80,5 +80,5 @@ Home for controlled versions of documents related to Argonaut Subscriptions
 
 ## Backporting Changes to R4
 
-- Proposal on how to backport the changes to Subscription slated for R5 to R4: [Backporting Changes to R4](Backporting Changes to R4)
+- Proposal on how to backport the changes to Subscription slated for R5 to R4: [Backport to R4](backport-to-r4.md)
 
