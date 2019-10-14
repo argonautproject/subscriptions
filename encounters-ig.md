@@ -153,7 +153,14 @@ For example:
 ## Define Profile on Subscriptions (channel, payload, etc)
 
 - Must support for channel=`rest-hook`, payload={`empty`, `id-only`}
-- Subscription End (instant) should be required (and no more than ?? 1 Month ??)
+
+`Subscription.end` is a required field.  This field is necessary to detect stale subscriptions for removal.  Servers are allowed to determine a reasonable maximum time span, but MUST allow at least thirty one (31) days in the future.  The actual value used should be reasonably tied to the expected duration of the subscription, however it is understood that long-running Subscriptions will need to update this value periodically.  For example, on a server allowing the minumim span of thirty one (31) days, a Subscription created on 15 October 2019 would be allowed have an `end` set for no later than 15 November 2019.
+
+Using a time less than one month is permitted.  For clients that expect to be short-lived, it is reasonable to set a time less than one month in the future (e.g., one hour, one day, one week, etc.).
+
+Servers SHALL support updating the `end` field of an active Subscription so that a Subscription may be extended.  Servers are allowed to determine their maximum future span of time allowed when updating, given that it is also at least thirty one (31) days.
+
+When an expired Subscription is detected, a server may choose to either remove the resource or update the `status` to `off`.
 
 ## Worked examples for end-to-end exchange
 
