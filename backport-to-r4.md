@@ -88,3 +88,12 @@ Note this subscription points to its Topic as `https://server-r4.subscriptions.a
 ```
 
 Note that the `Basic.id` and the json-embedded-resource `Topic.id` here match (both are `1`), as required.
+
+## Managing Permissions with SMART scopes
+
+Permissions to create and read R5 Subscriptions and R5 Topics relies on SMART scopes, including some extension scopes (i.e., scopes that begin with `__`:
+
+* To create R5 Subscription data, a client should request scopes of `patient/Basic.write` (or `user/Basic.write`) and `__patient/R5Subscription.write` (or `__user/R5Subscription.write`)
+* To read R5 Subscription data, a client should request scopes of `patient/Basic.read` (or `user/Basic.read`) and `__patient/R5Subscription.read` (or `__user/R5Subscription.read`)
+* To read R5 Topic data, a client should request scopes of `patient/Basic.read` (or `user/Basic.read`) and `__patient/R5Subscription.read` (or `__user/R5Subscription.read`)
+* (If applicable) to create R5 Topic data, a client should request scopes of `patient/Basic.read` (or `user/Basic.read`) and `__patient/R5Topic.write` (or `__user/R5Topic.write`)
