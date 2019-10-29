@@ -79,56 +79,79 @@ by another physician or organization.
 
 ## Define Canonical Topics (Encounter Start + Encounter End)
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<Topic xmlns="http://hl7.org/fhir">
-	<id value="encounter-start"/>
-	<url value="http://argonautproject.org/encounters-ig/Topic/encounter-start"/>
-	<title value="encounter-start"/>
-	<status value="active"/>
-	<resourceTrigger>
-		<description value="Beginning of a clinical encounter"/>
-		<resourceType value="Encounter"/>
-		<queryCriteria>
-			<previous value="status:not=in-progress"/>
-			<current value="status=in-progress"/>
-			<requireBoth value="true"/>
-		</queryCriteria>
-		<fhirPathCriteria value="%previous.status!='in-progress' and %current.status='in-progress'"/>
-	</resourceTrigger>
-	<canFilterBy>
-		<name value="patient"/>
-		<matchType value="=" />
-		<matchType value="in" />
-		<documentation value="Matching based on the Patient (subject) of an Encounter or based on the Patient's group membership (in)."/>
-	</canFilterBy>
-</Topic>
+- Encounter Start
+```json
+{
+	"resourceType": "Topic",
+	"canFilterBy": [
+		{
+			"documentation": "Matching based on the Patient (subject) of an Encounter or based on the Patient's group membership (in).",
+			"matchType": [
+				"=",
+				"in"
+			],
+			"name": "patient"
+		}
+	],
+	"date": "2019-10-29",
+	"description": "Beginning of a clinical encounter",
+	"experimental": true,
+	"resourceTrigger": {
+		"description": "Beginning of a clinical encounter",
+		"fhirPathCriteria": "%previous.status!='in-progress' and %current.status='in-progress'",
+		"queryCriteria": {
+			"current": "status:in-progress",
+			"previous": "status:not=in-progress",
+			"requireBoth": true
+		},
+		"resourceType": [
+			"Encounter"
+		]
+	},
+	"status": "active",
+	"title": "encounter-start",
+	"url": "http://argonautproject.org/encounters-ig/Topic/encounter-start",
+	"version": "1.0",
+	"id": "encounter-start"
+}
 ```
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<Topic xmlns="http://hl7.org/fhir">
-	<id value="encounter-end"/>
-	<url value="http://argonautproject.org/encounters-ig/Topic/encounter-end"/>
-	<title value="encounter-end"/>
-	<status value="active"/>
-	<resourceTrigger>
-		<description value="End of a clinical encounter"/>
-		<resourceType value="Encounter"/>
-		<queryCriteria>
-			<previous value="status=in-progress"/>
-			<current value="status:not=in-progress"/>
-			<requireBoth value="true"/>
-		</queryCriteria>
-		<fhirPathCriteria value="%previous.status='in-progress' and %current.status!='in-progress'"/>
-	</resourceTrigger>
-	<canFilterBy>
-		<name value="patient"/>
-		<matchType value="=" />
-		<matchType value="in" />
-		<documentation value="Matching based on the Patient (subject) of an Encounter or based on the Patient's group membership (in)."/>
-	</canFilterBy>
-</Topic>
+- Encounter End
+
+```json
+{
+	"resourceType": "Topic",
+	"canFilterBy": [
+		{
+			"documentation": "Matching based on the Patient (subject) of an Encounter or based on the Patient's group membership (in).",
+			"matchType": [
+				"=",
+				"in"
+			],
+			"name": "patient"
+		}
+	],
+	"date": "2019-10-29",
+	"description": "End of a clinical encounter",
+	"experimental": true,
+	"resourceTrigger": {
+		"description": "End of a clinical encounter",
+		"fhirPathCriteria": "%previous.status='in-progress' and %current.status!='in-progress'",
+		"queryCriteria": {
+			"current": "status:not=in-progress",
+			"previous": "status:in-progress",
+			"requireBoth": true
+		},
+		"resourceType": [
+			"Encounter"
+		]
+	},
+	"status": "active",
+	"title": "encounter-end",
+	"url": "http://argonautproject.org/encounters-ig/Topic/encounter-end",
+	"version": "1.0",
+	"id": "encounter-end"
+}
 ```
 
 ## Explain Topic derivation
@@ -165,3 +188,12 @@ When an expired Subscription is detected, a server may choose to either remove t
 ## Worked examples for end-to-end exchange
 
 - Need workflow diagrams with examples here.
+
+## Security
+
+- REST-Hook security when maging subscriptions by a SMART on FHIR client interface
+- When creating a Subscription, the server SHOULD keep track of the client and user which requested it.
+- When sending notifications, servers SHOULD check that a notification is still authorized prior to sending it (e.g., client and user).
+- Servers are responsible for ensuring that PHI is transmitted securely (e.g., should refuse to transmit in cleartext, require TLS, etc.).
+- Servers SHOULD set a subscription state to `disabled` if a security validation fails, with an appropriate error message for diagnosis.
+- Consider the use of the Server Public Keys to sign data sent via subscription notifications.  This allows client verification without the need for a client secret.
