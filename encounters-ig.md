@@ -82,37 +82,37 @@ by another physician or organization.
 - Encounter Start
 ```json
 {
-	"resourceType": "Topic",
-	"canFilterBy": [
-		{
-			"documentation": "Matching based on the Patient (subject) of an Encounter or based on the Patient's group membership (in).",
-			"matchType": [
-				"=",
-				"in"
-			],
-			"name": "patient"
-		}
-	],
-	"date": "2019-10-29",
-	"description": "Beginning of a clinical encounter",
-	"experimental": true,
-	"resourceTrigger": {
-		"description": "Beginning of a clinical encounter",
-		"fhirPathCriteria": "%previous.status!='in-progress' and %current.status='in-progress'",
-		"queryCriteria": {
-			"current": "status:in-progress",
-			"previous": "status:not=in-progress",
-			"requireBoth": true
-		},
-		"resourceType": [
-			"Encounter"
-		]
-	},
-	"status": "active",
-	"title": "encounter-start",
-	"url": "http://argonautproject.org/encounters-ig/Topic/encounter-start",
-	"version": "1.0",
-	"id": "encounter-start"
+  "resourceType": "Topic",
+  "canFilterBy": [
+    {
+      "documentation": "Matching based on the Patient (subject) of an Encounter or based on the Patient's group membership (in).",
+      "matchType": [
+        "=",
+        "in"
+      ],
+      "name": "patient"
+    }
+  ],
+  "date": "2019-10-29",
+  "description": "Beginning of a clinical encounter",
+  "experimental": true,
+  "resourceTrigger": {
+    "description": "Beginning of a clinical encounter",
+    "fhirPathCriteria": "%previous.status!='in-progress' and %current.status='in-progress'",
+    "queryCriteria": {
+      "current": "status:in-progress",
+      "previous": "status:not=in-progress",
+      "requireBoth": true
+    },
+    "resourceType": [
+      "Encounter"
+    ]
+  },
+  "status": "active",
+  "title": "encounter-start",
+  "url": "http://argonautproject.org/encounters-ig/Topic/encounter-start",
+  "version": "1.0",
+  "id": "encounter-start"
 }
 ```
 
@@ -120,37 +120,37 @@ by another physician or organization.
 
 ```json
 {
-	"resourceType": "Topic",
-	"canFilterBy": [
-		{
-			"documentation": "Matching based on the Patient (subject) of an Encounter or based on the Patient's group membership (in).",
-			"matchType": [
-				"=",
-				"in"
-			],
-			"name": "patient"
-		}
-	],
-	"date": "2019-10-29",
-	"description": "End of a clinical encounter",
-	"experimental": true,
-	"resourceTrigger": {
-		"description": "End of a clinical encounter",
-		"fhirPathCriteria": "%previous.status='in-progress' and %current.status!='in-progress'",
-		"queryCriteria": {
-			"current": "status:not=in-progress",
-			"previous": "status:in-progress",
-			"requireBoth": true
-		},
-		"resourceType": [
-			"Encounter"
-		]
-	},
-	"status": "active",
-	"title": "encounter-end",
-	"url": "http://argonautproject.org/encounters-ig/Topic/encounter-end",
-	"version": "1.0",
-	"id": "encounter-end"
+  "resourceType": "Topic",
+  "canFilterBy": [
+    {
+      "documentation": "Matching based on the Patient (subject) of an Encounter or based on the Patient's group membership (in).",
+      "matchType": [
+        "=",
+        "in"
+      ],
+      "name": "patient"
+    }
+  ],
+  "date": "2019-10-29",
+  "description": "End of a clinical encounter",
+  "experimental": true,
+  "resourceTrigger": {
+    "description": "End of a clinical encounter",
+    "fhirPathCriteria": "%previous.status='in-progress' and %current.status!='in-progress'",
+    "queryCriteria": {
+      "current": "status:not=in-progress",
+      "previous": "status:in-progress",
+      "requireBoth": true
+    },
+    "resourceType": [
+      "Encounter"
+    ]
+  },
+  "status": "active",
+  "title": "encounter-end",
+  "url": "http://argonautproject.org/encounters-ig/Topic/encounter-end",
+  "version": "1.0",
+  "id": "encounter-end"
 }
 ```
 
