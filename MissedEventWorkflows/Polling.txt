@@ -1,7 +1,7 @@
-title Detecting Missed Events - Polling
+title Detecting Missed Events - Heartbeat
 
-participant Client
 participant Server
+participant Client
 
 Server -> Client: Subscription 'p_123', event 20
 
