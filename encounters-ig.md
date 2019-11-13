@@ -196,4 +196,4 @@ When an expired Subscription is detected, a server may choose to either remove t
 - When sending notifications, servers SHOULD check that a notification is still authorized prior to sending it (e.g., client and user).
 - Servers are responsible for ensuring that PHI is transmitted securely (e.g., should refuse to transmit in cleartext, require TLS, etc.).
 - Servers SHOULD set a subscription state to `disabled` if a security validation fails, with an appropriate error message for diagnosis.
-- Consider the use of the Server Public Keys to sign data sent via subscription notifications.  This allows client verification without the need for a client secret.
+- Servers may want to consider the use of authenticated delivery systems (e.g., asymmetric key signing) to allow clients to validate the message origin without the need of a client secret.
