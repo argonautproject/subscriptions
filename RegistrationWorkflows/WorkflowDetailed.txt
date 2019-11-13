@@ -1,0 +1,23 @@
+participantspacing 20
+
+participant Server
+participant Client
+
+note over Client:""Client creates notification endpoint""
+
+participant Client Endpoint
+Client-->*Client Endpoint:
+
+Client->Server:""Create Subscription\n**POST .../Subscription**\n- topic:           <color:#red>.../Topic/encounter_start</color>\n- filterBy:\n  - name:          Patient\n  - matchType:     =\n  - value:         Patient/123\n- channel:\n  - type:          rest-hook\n  - endpoint:      <color:#blue>...client/notifications/293</color>\n  - payload:\n    - contentType: application/fhir+json\n    - content:     empty""
+
+note right of Server:""Create subscription record\n- status: <color:#magenta>requested""
+
+Server-->Client:""HTTP Response (FHIR):\n**Status Code / Resource / OperationOutcome**\n - status: requested\n - id:     <color:#green>s202</color>\n""\n
+
+
+Server -> Client Endpoint: ""Handshake Bundle:\n**HTTP POST to <color:#blue>...client/notifications/293</color>**\n- meta.extensions:\n  - [subscription-url]:         <color:#green>/Subscription/s202</color>\n  - [subscription-topic-url]:   <color:#red>/Topic/encounter-start</color>\n  - [subscription-status]:      <color:#magenta>requested</color>\n  - [subscription-event-count]: 0\n  - [bundle-event-count]:       0\n- entries: []""
+
+
+Client Endpoint-->Server:""HTTP Response (Generic)""
+
+note right of Server:""Update subscription\n- status: active""

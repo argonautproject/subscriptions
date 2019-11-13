@@ -1,0 +1,22 @@
+participant Server
+participant Client
+
+Server -> Client: ""Notification Bundle:\n- HTTP POST to Client Endpoint\n- meta.extensions:\n  - [subscription-url]:         /Subscription/s202\n  - [subscription-topic-url]:   /Topic/encounter-start\n  - [subscription-status]:      active\n  - [subscription-event-count]: 5\n  - [bundle-event-count]:       1\n- entries: []""
+
+Client--> Server: ""Channel Response\n - HTTP 200 (OK)""
+
+entryspacing 3
+
+Client-> Server: ""Query for Encounters\n- HTTP GET: /Encounter?subject=123""
+entryspacing 1
+Server --> Client: ""Bundle of Encounters\n\n""
+
+entryspacing 3
+
+Client-> Server: ""Get Encounter\n- HTTP GET: /Encounter/p_123_enc_10""
+entryspacing 1
+Server --> Client: ""Requested Encounter resource\n\n""
+
+entryspacing 3
+
+note left of Client: Process…

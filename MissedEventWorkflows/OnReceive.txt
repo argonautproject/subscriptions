@@ -1,20 +1,24 @@
-title Detecting Missed Events - On Receive
+participantspacing 13
 
 participant Server
 participant Client
 
-Server -> Client: Subscription 'p_123', event 20
+Server -> Client: ""Subscription 'p_123'\n- subscription-event-count: 20
 
-entryspacing 2
-Server -> Client: Subscription 'p_123', event 21
+Server -> Client: ""Subscription 'p_123'\n- subscription-event-count: 21
 
-entryspacing 2
-Server -> Client: Subscription  'p_123', event 23
+Server -> Client: ""Subscription 'p_123'\n- subscription-event-count: 23
 
 entryspacing 3
 
-note left of Client: Determines event 22 is missing
+note left of Client: Determines event 22 is missing...
 
-Client -> Server: Request: Subscription 'p_123', event 22
+
+
+Client -> Server: ""Request (HTTP GET):\n .../Patient?_id=p_123""
+
+
 entryspacing 1
-Server --> Client: Subscription 'p_123', event 22
+Client -> Server: ""...""
+
+Client -> Server: ""Request (HTTP POST):\n.../Subscription/p_123\n- state: active""

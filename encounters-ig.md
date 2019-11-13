@@ -191,7 +191,7 @@ When an expired Subscription is detected, a server may choose to either remove t
 
 ## Security
 
-- REST-Hook security when maging subscriptions by a SMART on FHIR client interface
+- REST-Hook security when managing subscriptions by a SMART on FHIR client interface
 - When creating a Subscription, the server SHOULD keep track of the client and user which requested it.
 - When sending notifications, servers SHOULD check that a notification is still authorized prior to sending it (e.g., client and user).
 - Servers are responsible for ensuring that PHI is transmitted securely (e.g., should refuse to transmit in cleartext, require TLS, etc.).

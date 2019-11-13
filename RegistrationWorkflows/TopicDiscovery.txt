@@ -1,0 +1,14 @@
+title Topic Discovery
+
+participantspacing 7
+
+participant Server
+participant Client
+
+note right of Server:Server implements Topics,\n which includes the list of\nvalid filters for each Topic.
+
+Client->Server:Request list of Topic Resources\n**GET .../Topic/**
+Server-->Client:List of supported Topic Resources\n**Bundle of Topic entries**
+end
+
+note over Client:Client determines\nwhich Topic covers\ndesired notifications.
