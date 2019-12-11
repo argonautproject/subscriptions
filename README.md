@@ -14,15 +14,32 @@
   - Publicly deployed reference implementation(s) that meet the draft spec
 - Sep - Dec
   - Connectathon at HL7 September Working Group Meeting
+- Jan - Feb
+  - Connectathon at CMS Meeting (January)
+  - Connectathon at HL7 February Working Group Meeting
   - Publish Argonaut Subscriptions IG 1.0
-
+  - Publish Backport to R4 IG 1.0
+  - Attempt to finalize for ballot
 
 ## Overview
 
 ## Specifications and Prior work
 
- - [FHIR Resource Subscription](http://build.fhir.org/subscription.html) - The subscription resource is used to define a push-based subscription from a server to another system. Once a subscription is registered with the server, the server checks every resource that is created or updated, and if the resource matches the given criteria, it sends a message on the defined "channel" so that another system can take an appropriate action
- - [210901 FHIR Subscriptions Connectathon Track](http://wiki.hl7.org/index.php?title=210901_FHIR_Subscriptions) - Latest of several HL7 Connectathons to advance the maturity of the interactions and resources associated with FHIR Subscriptions.
+- Current Specifications
+  - [Subscription](http://build.fhir.org/subscription.html)
+  - [SubscriptionTopic](http://build.fhir.org/branches/argonaut-subscription/subscriptiontopic.html)
+
+- Upcoming Connectathon Tracks
+  - [CMS Connectathon 1 (2020-01)](https://confluence.hl7.org/display/FHIR/2020-02+Subscriptions+Track) - CMS Connectathon Track with draft R5 Subscription and SubscriptionTopic resources.  Used to advance the maturity of the interactions and resources associated with FHIR Subscriptions.
+  
+  - [Connectathon 23 (2020-02)](https://confluence.hl7.org/display/FHIR/2020-02+Subscriptions+Track) - HL7 Connectathon Track with draft R5 Subscription and Topic resources.  Used to advance the maturity of the interactions and resources associated with FHIR Subscriptions.
+
+- Completed Connectathon Tracks
+  - [Connectathon 22 (2019-09)](https://confluence.hl7.org/display/FHIR/2019-09+Subscription) - First HL7 Connectathon Track with draft R5 Subscription and Topic resources.  Used to advance the maturity of the interactions and resources associated with FHIR Subscriptions.
+
+- Prior Specifications
+  - [FHIR R4 Subscription Resource](http://hl7.org/fhir/R4/subscription.html) - The subscription resource is used to define a push-based subscription from a server to another system. Once a subscription is registered with the server, the server checks every resource that is created or updated, and if the resource matches the given criteria, it sends a message on the defined "channel" so that another system can take an appropriate action
+
 ## Use Cases
 
 - Clinical information has changed
@@ -36,7 +53,7 @@
 ## Resources
 
 - Notes & slides on Google Drive ([folder](https://drive.google.com/drive/folders/1I8zbQ1Yz3T9IwSumEmStRIkqSSI6iODm))
-- Realtime chat on [Zulip](https://chat.fhir.org/#narrow/stream/argonaut)
+- Realtime chat on Zulip: [#Argonaut](https://chat.fhir.org/#narrow/stream/179175-argonaut) and [#Subscriptions](https://chat.fhir.org/#narrow/stream/179229-subscriptions)
 - Spec development on [GitHub](#)
 - Granular decisions via [GitHub Issues](https://github.com/argonautproject/subscriptions/issues) + PRs
 - Calls every two weeks (or more often, if needed)

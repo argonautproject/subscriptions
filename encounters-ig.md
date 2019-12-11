@@ -18,11 +18,11 @@ Question: what is the context for background?
 - Issues with R4 (implementability)
 
 - Changes in R5:
-  - Split into Subscription and Topic
+  - Split into Subscription and SubscriptionTopic
   - Allow servers to support a reduced number of Topics
   - Still generically useful to clients
   - Filters based on Search and existing modifiers
-  - Topic filter restrictions, canFilterBy
+  - SubscriptionTopic filter restrictions, canFilterBy
   - Subscription implementation of filters
 
 Subscriptions in FHIR R4 were designed to be very generic and generally unconcerned with
@@ -35,20 +35,20 @@ coordinate what functionality was usable and in which formats queries needed to 
 
 It was decided that the design of Subscriptions in R4 was not able to move beyond the
 issues, and that a redesign was required.  In FHIR R5, Subscriptions have been broken into 
-two resources, a Topic and a Subscription, which adress the issues with Subscriptions in 
+two resources, `SubscriptionTopic` and `Subscription`, which adress the issues with Subscriptions in 
 R4.  Even with the redesign, there is a potential issue with interoperability based on
 Topic definitions, which this guide aims to prevent.
 
-With the new design, servers are able to support a reduced set of Topics, with a reduced
+With the new design, servers are able to support a reduced set of Subscription Topics, with a reduced
 set of clearly-defined filters to clients.  This allows clients to be developed generically
 while also lowering the burden on server developers.
 
-Topics fall under two categories: conceptual and computable.  There is overlap between
+Subscription Topics fall under two categories: conceptual and computable.  There is overlap between
 the two (e.g., a server can computably define a new Admission encounter), but the server
 is able to use whatever internal implementation makes sense to capture the concept being
-expressed.  For example, in the Admissions Topic defined below, two possible computable
+expressed.  For example, in the Encounter-Start Subscription Topic defined below, two possible computable
 definitions are provided (in FHIRPath and using Query), but existing facade servers may
-choose to simply implement the Topic as part of an existing HL7 v2 ADT workflow.
+choose to simply implement the Subscription Topic as part of an existing HL7 v2 ADT workflow.
 
 Given the goals of the redesign, filtering is based on Search and Search Modifiers.  This
 allows for more code reuse (for clients and servers) and lowers the bar for implementation.
@@ -77,12 +77,12 @@ by another physician or organization.
 - Discharge use cases
   - Should these mirror admission use cases?  Haven't really discussed.
 
-## Define Canonical Topics (Encounter Start + Encounter End)
+## Define Canonical SubscriptionTopics (Encounter Start + Encounter End)
 
 - Encounter Start
 ```json
 {
-  "resourceType": "Topic",
+  "resourceType": "SubscriptionTopic",
   "canFilterBy": [
     {
       "documentation": "Matching based on the Patient (subject) of an Encounter or based on the Patient's group membership (in).",
@@ -110,7 +110,7 @@ by another physician or organization.
   },
   "status": "active",
   "title": "encounter-start",
-  "url": "http://argonautproject.org/encounters-ig/Topic/encounter-start",
+  "url": "http://argonautproject.org/encounters-ig/SubscriptionTopic/encounter-start",
   "version": "1.0",
   "id": "encounter-start"
 }
@@ -120,7 +120,7 @@ by another physician or organization.
 
 ```json
 {
-  "resourceType": "Topic",
+  "resourceType": "SubscriptionTopic",
   "canFilterBy": [
     {
       "documentation": "Matching based on the Patient (subject) of an Encounter or based on the Patient's group membership (in).",
@@ -148,24 +148,24 @@ by another physician or organization.
   },
   "status": "active",
   "title": "encounter-end",
-  "url": "http://argonautproject.org/encounters-ig/Topic/encounter-end",
+  "url": "http://argonautproject.org/encounters-ig/SubscriptionTopic/encounter-end",
   "version": "1.0",
   "id": "encounter-end"
 }
 ```
 
-## Explain Topic derivation
+## Subscription Topic Derivation
 
-Require servers to support searching on Topic.derivedFromCanonical and/or Topic.derivedFromUri.
+Require servers to support searching on `SubscriptionTopic.derivedFromCanonical` and/or `SubscriptionTopic.derivedFromUri`.
 
 Explain that servers are encouraged to add additional filters, but cannot remove existing
-ones nor change the 'concept' of a Topic during derivation.
+ones nor change the 'concept' of a Subscription Topic during derivation.
 
 For example:
-  - A server wanting to expose the same Topic, but with a different computable definition is OK.
+  - A server wanting to expose the same SubscriptionTopic, but with a different computable definition is OK.
   - A server wanting to expose additional canFilterBy parameters is OK.
   - A server wanting to remove an existing canFilterBy parameter is NOT ok.
-  - A server wanting to derive a Topic based on a different resource is NOT ok (e.g., start/end of medication derived from encounter).
+  - A server wanting to derive a SubscriptionTopic based on a different resource is NOT ok (e.g., start/end of medication derived from encounter).
 
 ## Define bundle used in notifications
 

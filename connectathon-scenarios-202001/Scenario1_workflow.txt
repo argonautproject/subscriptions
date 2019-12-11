@@ -1,0 +1,47 @@
+title Scenario 1 Workflow
+
+participantspacing 7
+
+participant Server
+participant Client
+
+group Optional: Prior to Subscription
+  note right of Server:Server implements SubscriptionTopics,\n which includes the list of\nvalid filters for each SubscriptionTopic.
+
+  Client->Server:Request all SubscriptionTopic Resources
+  Server-->Client:Bundle of implemented SubscriptionTopic Resources
+end
+
+alt Select Existing Patient
+  note over Client:Ask User for criteria
+  Client->Server:Ask for Patients
+  Server-->Client:Bundle of matching patients
+  note over Client:User selects a patient
+else Create New Patient
+  note over Client:Ask User for Patient Information
+  Client->Server:Create Patient
+  Server-->Client:Patient Information (created)
+end
+
+note over Client:Client creates endpoint\nto listen for notifications.
+
+participant Client Endpoint
+Client-->*Client Endpoint:
+
+
+Client->Server:""Create Subscription\nPOST .../Subscription\n- topic:           .../SubscriptionTopic/admissions\n- filterBy:\n  - name:          Patient\n  - matchType:     =\n  - value:         Patient/<patient id>\n- channel:\n  - type:          rest-hook\n  - endpoint:      ...client/notifications/293\n  - payload:\n    - contentType: application/fhir+json\n    - content:     empty""
+
+note right of Server:""Create subscription record\n- status: requested""
+
+Server-->Client:""HTTP Response (FHIR):\nStatus Code / Resource / OperationOutcome\n - status: requested\n - id: <subscription id>\n""\n
+
+Server->Client Endpoint: ""Handshake (Bundle):\n Bundle.meta.extensions:\n - [bundle-event-count]: 0\n - [subscription-event-count]: 0\n - [subscription-status]: 'requested'\n - [subscription-url]: <URL for this Subscription on the server>\n - [subscription-topic-url]: <URL for the SubscriptionTopic for this subscription on Server>""
+Client Endpoint-->Server: ""HTTP 202 (Accepted)""
+
+note right of Server:Change subscription state to 'active'
+
+note over Client:Trigger Event
+
+Server->Client Endpoint: ""Notification (Bundle):\nBundle.meta.extensions:\n - [bundle-event-count]: 1\n - [subscription-event-count]: 1\n - [subscription-status]: 'active'\n - [subscription-url]: <URL for this Subscription on the server>\n - [subscription-topic-url]: <URL for the SubscriptionTopic for this subscription on Server>\nBundle.entry: [<payload per Subscription.channel.payload.content>]""
+
+Client Endpoint-->Server: ""HTTP 202 (Accepted)""

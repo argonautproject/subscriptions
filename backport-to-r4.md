@@ -8,23 +8,25 @@ We want to support Topic-based Subscriptions in R4 in a manner that's ["simple"]
 
 ### Representing R5 Topics and R5 Subscriptions
 
-* every FHIR R5 `Topic` is represented in R4 as a "surrogate `Basic` Resource" with a `Basic.code.coding` of `{"system": "http://hl7.org/fhir/resource-types", "code": "R5Topic"}` (TODO: decide the right value for this Coding)
+* every FHIR R5 `SubscriptionTopic` is represented in R4 as a "surrogate `Basic` Resource" with a `Basic.code.coding` of `{"system": "http://hl7.org/fhir/resource-types", "code": "R5SubscriptionTopic"}` (TODO: decide the right value for this Coding)
 
 * every FHIR R5 `Subscription` is represented in R4 as a "surrogate `Basic` Resource" with a `Basic.code.coding` of `{"system": "http://hl7.org/fhir/resource-types", "code": "R5Subscription"}` (TODO: decide the right value for this Coding)
 
-* every surrogate `Basic` resource, in addition to a `Basic.code.coding`, contains a "json-embedded-resource" extension with `"url": "http://hl7.org/fhir/StructureDefinition/json-embedded-resource"` and a `valueString` containing a JSON-stringified FHIR R5 resource (Topic or Subscription)
+* every surrogate `Basic` resource, in addition to a `Basic.code.coding`, contains a "json-embedded-resource" extension with `"url": "http://hl7.org/fhir/StructureDefinition/json-embedded-resource"` and a `valueString` containing a JSON-stringified FHIR R5 resource (SubscriptionTopic or Subscription)
 
-* every `Reference.value` pointing to an R5 Subscription or R5 Topic is represented in R4 as a reference to `Basic/:id`
+* every `Reference.value` pointing to an R5 Subscription or R5 SubscriptionTopic is represented in R4 as a reference to `Basic/:id`
 
-* for every R5 Subscription or R5 Topic, the `Subscription.id` or `Topic.id` of the json-embedded-resource is populated to match the `Basic.id` of its surrogate.
+* for every R5 Subscription or R5 SubscriptionTopic, the `Subscription.id` or `SubscriptionTopic.id` of the json-embedded-resource is populated to match the `Basic.id` of its surrogate.
 
 * for every R5 Subscription associated with a single `patient`, the surrogate has its `Basic.subject` populated with a reference to the patient
 
+* fields defined as `integer64` in R5 should be represented as a `string` in Basic (TODO: list fields)
+
 ### REST API
 
-Clients interact with the create/update/delete API for `Basic`, interacting with the surrogate resources to manage R5 Topic and R5 Subscription instances. Search requires some additional considerations:
+Clients interact with the create/update/delete API for `Basic`, interacting with the surrogate resources to manage R5 SubscriptionTopic and R5 Subscription instances. Search requires some additional considerations:
 
-* Topic "search all" is implemented via `GET Basic?code=R5Topic`. Fine-grained search MAY be supported with custom search parameters that index the `valueString` JSON, using definitions from http://build.fhir.org/topic.html#search
+* SubscriptionTopic "search all" is implemented via `GET Basic?code=R5SubscriptionTopic`. Fine-grained search MAY be supported with custom search parameters that index the `valueString` JSON, using definitions from http://build.fhir.org/subscriptiontopic.html#search
 
 * Subscription "search all" is implemented via `GET Basic?code=R5Subscription` or `GET Basic?code=R5Subscription&patient=[id]`. Fine-grained search MAY be supported with custom search parameters that index the `valueString` JSON, using definitions from http://build.fhir.org/subscription.html#search
 
@@ -33,7 +35,7 @@ Clients interact with the create/update/delete API for `Basic`, interacting with
 The rest of subscription mechanics work as in R5. Namely:
 
 * Channels types and payloads
-* Event matching by Topic + filters
+* Event matching by SubscriptionTopic + filters
 * Event notifications with Bundles
 
 
@@ -64,7 +66,7 @@ A "create subscription" request has a `POST` body like:
 }
 ```
 
-Note this subscription points to its Topic as `https://server-r4.subscriptions.argo.run/Basic/1`, indicating that the contents of `Basic/1` on the server should look like:
+Note this subscription points to its SubscriptionTopic as `https://server-r4.subscriptions.argo.run/Basic/1`, indicating that the contents of `Basic/1` on the server should look like:
 
 ```json
 {
@@ -74,26 +76,26 @@ Note this subscription points to its Topic as `https://server-r4.subscriptions.a
     "coding": [
       {
         "system": "http://hl7.org/fhir/resource-types",
-        "code": "R5Topic"
+        "code": "R5SubscriptionTopic"
       }
     ]
   },
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/json-embedded-resource",
-      "valueString": "{\"resourceType\":\"Topic\",\"canFilterBy\":[{\"documentation\":\"Exact match to a patient resource (reference)\",\"matchType\":[\"=\",\"in\",\"not-in\"],\"name\":\"patient\"}],\"date\":\"2019-08-01\",\"description\":\"Admission Topic for testing framework and behavior\",\"experimental\":true,\"resourceTrigger\":{\"description\":\"Beginning of a clinical encounter\",\"fhirPathCriteria\":\"%previous.status!='in-progress' and %current.status='in-progress'\",\"queryCriteria\":{\"current\":\"status:in-progress\",\"previous\":\"status:not=in-progress\",\"requireBoth\":true},\"resourceType\":[\"Encounter\"]},\"status\":\"draft\",\"title\":\"admission\",\"url\":\"http://argonautproject.org/subscription-ig/Topic/admission\",\"version\":\"0.4\",\"id\":\"1\"}"
+      "valueString": "{\"resourceType\":\"SubscriptionTopic\",\"canFilterBy\":[{\"documentation\":\"Exact match to a patient resource (reference)\",\"matchType\":[\"=\",\"in\",\"not-in\"],\"name\":\"patient\"}],\"date\":\"2019-08-01\",\"description\":\"Admission Subscription Topic for testing framework and behavior\",\"experimental\":true,\"resourceTrigger\":{\"description\":\"Beginning of a clinical encounter\",\"fhirPathCriteria\":\"%previous.status!='in-progress' and %current.status='in-progress'\",\"queryCriteria\":{\"current\":\"status:in-progress\",\"previous\":\"status:not=in-progress\",\"requireBoth\":true},\"resourceType\":[\"Encounter\"]},\"status\":\"draft\",\"title\":\"admission\",\"url\":\"http://argonautproject.org/subscription-ig/SubscriptionTopic/admission\",\"version\":\"0.4\",\"id\":\"1\"}"
     }
   ]
 }
 ```
 
-Note that the `Basic.id` and the json-embedded-resource `Topic.id` here match (both are `1`), as required.
+Note that the `Basic.id` and the json-embedded-resource `SubscriptionTopic.id` here match (both are `1`), as required.
 
 ## Managing Permissions with SMART scopes
 
-Permissions to create and read R5 Subscriptions and R5 Topics relies on SMART scopes, including some extension scopes (i.e., scopes that begin with `__`:
+Permissions to create and read R5 Subscriptions and R5 SubscriptionTopics relies on SMART scopes, including some extension scopes (i.e., scopes that begin with `__`:
 
 * To create R5 Subscription data, a client should request scopes of `patient/Basic.write` (or `user/Basic.write`) and `__patient/R5Subscription.write` (or `__user/R5Subscription.write`)
 * To read R5 Subscription data, a client should request scopes of `patient/Basic.read` (or `user/Basic.read`) and `__patient/R5Subscription.read` (or `__user/R5Subscription.read`)
-* To read R5 Topic data, a client should request scopes of `patient/Basic.read` (or `user/Basic.read`) and `__patient/R5Subscription.read` (or `__user/R5Subscription.read`)
-* (If applicable) to create R5 Topic data, a client should request scopes of `patient/Basic.read` (or `user/Basic.read`) and `__patient/R5Topic.write` (or `__user/R5Topic.write`)
+* To read R5 SubscriptionTopic data, a client should request scopes of `patient/Basic.read` (or `user/Basic.read`) and `__patient/R5Subscription.read` (or `__user/R5Subscription.read`)
+* (If applicable) to create R5 SubscriptionTopic data, a client should request scopes of `patient/Basic.read` (or `user/Basic.read`) and `__patient/R5SubscriptionTopic.write` (or `__user/R5SubscriptionTopic.write`)
