@@ -25,7 +25,7 @@
 
 ## Specifications and Prior work
 
-- Current Specifications
+- Current *R5* Specifications
   - [Subscription](http://build.fhir.org/subscription.html)
   - [SubscriptionTopic](http://build.fhir.org/branches/argonaut-subscription/subscriptiontopic.html)
 
