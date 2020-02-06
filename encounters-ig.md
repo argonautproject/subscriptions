@@ -3,6 +3,13 @@
 The Encounters Implementation Guide is based on FHIR Version R5 and defines the minimum
 conformance requirements for supporting patient Encounter notifications.
 
+As of this writing, the Subscriptions R5 framework is still under active development.  
+The guidance provided in this Guide is considered substatially complete, but with the 
+understanding that the canonical versions of the resources will change in alignment with 
+R5.  When FHIR R5 is published, an update to this Guide will be published updating this note.
+
+Last update from build.fhir.org on February 06, 2020.
+
 ## Background
 
 Question: what is the context for background?
@@ -79,80 +86,11 @@ by another physician or organization.
 
 ## Define Canonical SubscriptionTopics (Encounter Start + Encounter End)
 
-- Encounter Start
-```json
-{
-  "resourceType": "SubscriptionTopic",
-  "canFilterBy": [
-    {
-      "documentation": "Matching based on the Patient (subject) of an Encounter or based on the Patient's group membership (in).",
-      "matchType": [
-        "=",
-        "in"
-      ],
-      "name": "patient"
-    }
-  ],
-  "date": "2019-10-29",
-  "description": "Beginning of a clinical encounter",
-  "experimental": true,
-  "resourceTrigger": {
-    "description": "Beginning of a clinical encounter",
-    "fhirPathCriteria": "%previous.status!='in-progress' and %current.status='in-progress'",
-    "queryCriteria": {
-      "current": "status:in-progress",
-      "previous": "status:not=in-progress",
-      "requireBoth": true
-    },
-    "resourceType": [
-      "Encounter"
-    ]
-  },
-  "status": "active",
-  "title": "encounter-start",
-  "url": "http://argonautproject.org/encounters-ig/SubscriptionTopic/encounter-start",
-  "version": "1.0",
-  "id": "encounter-start"
-}
-```
+- SubscriptionTopic: [Encounter Start](canonical/subscriptiontopic-encounter-start.json)
 
-- Encounter End
 
-```json
-{
-  "resourceType": "SubscriptionTopic",
-  "canFilterBy": [
-    {
-      "documentation": "Matching based on the Patient (subject) of an Encounter or based on the Patient's group membership (in).",
-      "matchType": [
-        "=",
-        "in"
-      ],
-      "name": "patient"
-    }
-  ],
-  "date": "2019-10-29",
-  "description": "End of a clinical encounter",
-  "experimental": true,
-  "resourceTrigger": {
-    "description": "End of a clinical encounter",
-    "fhirPathCriteria": "%previous.status='in-progress' and %current.status!='in-progress'",
-    "queryCriteria": {
-      "current": "status:not=in-progress",
-      "previous": "status:in-progress",
-      "requireBoth": true
-    },
-    "resourceType": [
-      "Encounter"
-    ]
-  },
-  "status": "active",
-  "title": "encounter-end",
-  "url": "http://argonautproject.org/encounters-ig/SubscriptionTopic/encounter-end",
-  "version": "1.0",
-  "id": "encounter-end"
-}
-```
+- SubscriptionTopic: [Encounter End](canonical/subscriptiontopic-encounter-end.json)
+
 
 ## Subscription Topic Derivation
 
