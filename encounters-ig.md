@@ -3,12 +3,12 @@
 The Encounters Implementation Guide is based on FHIR Version R5 and defines the minimum
 conformance requirements for supporting patient Encounter notifications.
 
-As of this writing, the Subscriptions R5 framework is still under active development.  
-The guidance provided in this Guide is considered substatially complete, but with the 
+As of this writing, the Subscriptions R5 framework is still under active development.  The 
+guidance provided in this Guide is considered substatially complete, but with the 
 understanding that the canonical versions of the resources will change in alignment with 
 R5.  When FHIR R5 is published, an update to this Guide will be published updating this note.
 
-Last update from build.fhir.org on February 06, 2020.
+Last updated from build.fhir.org (R5 development branch) on February 06, 2020.
 
 ## Background
 
@@ -84,26 +84,12 @@ by another physician or organization.
 - Discharge use cases
   - Should these mirror admission use cases?  Haven't really discussed.
 
-## Define Canonical SubscriptionTopics (Encounter Start + Encounter End)
+## Canonical Argonaut `SubscriptionTopic` Resources
 
 - SubscriptionTopic: [Encounter Start](canonical/subscriptiontopic-encounter-start.json)
 
-
 - SubscriptionTopic: [Encounter End](canonical/subscriptiontopic-encounter-end.json)
 
-
-## Subscription Topic Derivation
-
-Require servers to support searching on `SubscriptionTopic.derivedFromCanonical` and/or `SubscriptionTopic.derivedFromUri`.
-
-Explain that servers are encouraged to add additional filters, but cannot remove existing
-ones nor change the 'concept' of a Subscription Topic during derivation.
-
-For example:
-  - A server wanting to expose the same SubscriptionTopic, but with a different computable definition is OK.
-  - A server wanting to expose additional canFilterBy parameters is OK.
-  - A server wanting to remove an existing canFilterBy parameter is NOT ok.
-  - A server wanting to derive a SubscriptionTopic based on a different resource is NOT ok (e.g., start/end of medication derived from encounter).
 
 ## Define bundle used in notifications
 
