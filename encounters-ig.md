@@ -4,33 +4,113 @@ The Encounters Implementation Guide is based on FHIR Version R5 and defines the 
 conformance requirements for supporting patient Encounter notifications.
 
 As of this writing, the Subscriptions R5 framework is still under active development.  The 
-guidance provided in this Guide is considered substatially complete, but with the 
-understanding that the canonical versions of the resources will change in alignment with 
+guidance provided in this Guide is considered substantially complete, with the 
+understanding that the canonical instances of resources will change in alignment with 
 R5.  When FHIR R5 is published, an update to this Guide will be published updating this note.
 
 Last updated from build.fhir.org (R5 development branch) on February 06, 2020.
 
 ## Background
 
-Question: what is the context for background?
+- Subscription Changes (R4 - R5)
 
-- Background around Subscription Changes (R4 - R5)
+A resource redesign with breaking changes is not something the FHIR community undertakes 
+lightly.  While the Subscriptions mechanism availble in R4 worked for some use cases, 
+there were implementation issues which were insurmountable in others.  The changes 
+in R5 can be broken down into a few key points:
 
-- Background around Encounters and why someone would want notifications
+  - Split `Subscription` into two resouces: `Subscription` and `SubscriptionTopic`
+  - Allow servers to explicity support specific `SubscriptionTopics`
+  - Remain generically useful to clients
+  - Simplify filter language (base on exsisting parts of FHIR)
+  - Specify filter restrictions in `SubscriptionTopic` (canFilterBy) to ease implementation
 
-- Background around why there needs to be an Argonaut guide to Encounter Notifications
+More detail below (link)
 
-## Dependency on FHIR R5
+- Why Encounter Notifications
 
-- Issues with R4 (implementability)
+Subscriptions are being designed to cover many use cases.  In choosing an area to focus on, 
+Encounter notifications were decided on as a good 'first step'.
 
-- Changes in R5:
-  - Split into Subscription and SubscriptionTopic
-  - Allow servers to support a reduced number of Topics
-  - Still generically useful to clients
-  - Filters based on Search and existing modifiers
-  - SubscriptionTopic filter restrictions, canFilterBy
-  - Subscription implementation of filters
+  - Encounter notifications are currently quite relevant in the U.S., given forthcoming rules and regulations (e.g., both patient access and care team notifications).  
+
+  - Encounters are relatively simple to conceptualize
+
+  - Encounters are well modeled and defined
+
+  - Encounter resouces are well supported in current FHIR implementations
+
+  - Encounter notifications enable many workflows, both internal and external to a provider
+
+  - Easy case to use: widely applicable and not political
+
+- Why an Argonaut Guide
+
+The Argonaut Project felt that establishing canonical resource instances for Encounters 
+would allow for faster and broader adoption.
+
+By engaging vendors and providers in a tight feedback loop, the Argonaut Project could 
+help move the R5 redesign work forward.
+
+
+
+
+## Use case: encounter notifications
+
+- Describe (briefly) use cases for encounters
+
+There are a few key use cases that Argonaut focused on in terms of Encounter notifications:
+
+- Single patient (identified by id) start of encounter
+
+This use case covers a system being notified when a particular patient of interest
+has started a new encounter.
+
+For example, a consumer device (e.g., phone) receiving notifications that a person is ..? (phrasing)
+
+- Single patient (identified by group membership) start of encounter
+
+This use case covers a system being notified when a patient within a defined group
+has started a new encounter.
+
+For example, a physician receiving notifications that one of their patients is being seen
+by another physician or organization.
+
+
+## Canonical Argonaut `SubscriptionTopic` Resources
+
+- SubscriptionTopic: [Encounter Start](canonical/subscriptiontopic-encounter-start.json)
+
+- SubscriptionTopic: [Encounter End](canonical/subscriptiontopic-encounter-end.json)
+
+
+## Define Profile on Subscriptions (channel, payload, etc)
+
+- Must support for channel=`rest-hook`, payload={`empty`, `id-only`}
+
+`Subscription.end` is a required field.  This field is necessary to detect stale subscriptions for removal.  Servers are allowed to determine a reasonable maximum time span, but MUST allow at least thirty one (31) days in the future.  The actual value used should be reasonably tied to the expected duration of the subscription, however it is understood that long-running Subscriptions will need to update this value periodically.  For example, on a server allowing the minumim span of thirty one (31) days, a Subscription created on 15 October 2019 would be allowed have an `end` set for no later than 15 November 2019.
+
+Using a time less than one month is permitted.  For clients that expect to be short-lived, it is reasonable to set a time less than one month in the future (e.g., one hour, one day, one week, etc.).
+
+Servers SHALL support updating the `end` field of an active Subscription so that a Subscription may be extended.  Servers are allowed to determine their maximum future span of time allowed when updating, given that it is also at least thirty one (31) days.
+
+When an expired Subscription is detected, a server may choose to either remove the resource or update the `status` to `off`.
+
+## Worked examples for end-to-end exchange
+
+- Need workflow diagrams with examples here.
+
+## Security
+
+- REST-Hook security when managing subscriptions by a SMART on FHIR client interface
+- When creating a Subscription, the server SHOULD keep track of the client and user which requested it.
+- When sending notifications, servers SHOULD check that a notification is still authorized prior to sending it (e.g., client and user).
+- Servers are responsible for ensuring that PHI is transmitted securely (e.g., should refuse to transmit in cleartext, require TLS, etc.).
+- Servers SHOULD set a subscription state to `disabled` if a security validation fails, with an appropriate error message for diagnosis.
+- Servers may want to consider the use of authenticated delivery systems (e.g., asymmetric key signing) to allow clients to validate the message origin without the need of a client secret.
+
+
+## More on Subscriptions R5
 
 Subscriptions in FHIR R4 were designed to be very generic and generally unconcerned with
 the internal operations of the server.  While powerful in concept, this design led to 
@@ -59,65 +139,3 @@ choose to simply implement the Subscription Topic as part of an existing HL7 v2 
 
 Given the goals of the redesign, filtering is based on Search and Search Modifiers.  This
 allows for more code reuse (for clients and servers) and lowers the bar for implementation.
-
-## Use case: encounter notifications
-
-- Describe (briefly) use cases for encounters
-
-There are a few key use cases that Argonaut focused on in terms of Encounter notifications:
-
-- Single patient new encounter
-
-This use case covers a system being notified when a particular patient of interest
-has started a new encounter.
-
-For example, a consumer device (e.g., phone) receiving notifications that a person is ..? (phrasing)
-
-- Group patient admit (connectathon scenario 2)
-
-This use case covers a system being notified when a patient within a defined group
-has started a new encounter.
-
-For example, a physician receiving notifications that one of their patients is being seen
-by another physician or organization.
-
-- Discharge use cases
-  - Should these mirror admission use cases?  Haven't really discussed.
-
-## Canonical Argonaut `SubscriptionTopic` Resources
-
-- SubscriptionTopic: [Encounter Start](canonical/subscriptiontopic-encounter-start.json)
-
-- SubscriptionTopic: [Encounter End](canonical/subscriptiontopic-encounter-end.json)
-
-
-## Define bundle used in notifications
-
-- Use of `history` bundle
-- Extensions (on meta)
-- Contents based on payload
-
-## Define Profile on Subscriptions (channel, payload, etc)
-
-- Must support for channel=`rest-hook`, payload={`empty`, `id-only`}
-
-`Subscription.end` is a required field.  This field is necessary to detect stale subscriptions for removal.  Servers are allowed to determine a reasonable maximum time span, but MUST allow at least thirty one (31) days in the future.  The actual value used should be reasonably tied to the expected duration of the subscription, however it is understood that long-running Subscriptions will need to update this value periodically.  For example, on a server allowing the minumim span of thirty one (31) days, a Subscription created on 15 October 2019 would be allowed have an `end` set for no later than 15 November 2019.
-
-Using a time less than one month is permitted.  For clients that expect to be short-lived, it is reasonable to set a time less than one month in the future (e.g., one hour, one day, one week, etc.).
-
-Servers SHALL support updating the `end` field of an active Subscription so that a Subscription may be extended.  Servers are allowed to determine their maximum future span of time allowed when updating, given that it is also at least thirty one (31) days.
-
-When an expired Subscription is detected, a server may choose to either remove the resource or update the `status` to `off`.
-
-## Worked examples for end-to-end exchange
-
-- Need workflow diagrams with examples here.
-
-## Security
-
-- REST-Hook security when managing subscriptions by a SMART on FHIR client interface
-- When creating a Subscription, the server SHOULD keep track of the client and user which requested it.
-- When sending notifications, servers SHOULD check that a notification is still authorized prior to sending it (e.g., client and user).
-- Servers are responsible for ensuring that PHI is transmitted securely (e.g., should refuse to transmit in cleartext, require TLS, etc.).
-- Servers SHOULD set a subscription state to `disabled` if a security validation fails, with an appropriate error message for diagnosis.
-- Servers may want to consider the use of authenticated delivery systems (e.g., asymmetric key signing) to allow clients to validate the message origin without the need of a client secret.
