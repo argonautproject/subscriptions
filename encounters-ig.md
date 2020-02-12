@@ -1,12 +1,8 @@
 ## Introduction
 
-The Encounters Implementation Guide is based on FHIR Version R5 and defines the minimum
-conformance requirements for supporting patient Encounter notifications.
+The Encounters Implementation Guide is based on FHIR Version R5 and defines the minimum conformance requirements for supporting patient Encounter notifications.
 
-As of this writing, the Subscriptions R5 framework is still under active development.  The 
-guidance provided in this Guide is considered substantially complete, with the 
-understanding that the canonical instances of resources will change in alignment with 
-R5.  When FHIR R5 is published, an update to this Guide will be published updating this note.
+As of this writing, the Subscriptions R5 framework is still under active development.  The guidance provided in this Guide is considered substantially complete, with the understanding that the canonical instances of resources will change in alignment with R5.  When FHIR R5 is published, an update to this Guide will be published updating this note.
 
 Last updated from build.fhir.org (R5 development branch) on February 06, 2020.
 
@@ -14,23 +10,17 @@ Last updated from build.fhir.org (R5 development branch) on February 06, 2020.
 
 - Subscription Changes (R4 - R5)
 
-A resource redesign with breaking changes is not something the FHIR community undertakes 
-lightly.  While the Subscriptions mechanism availble in R4 worked for some use cases, 
-there were implementation issues which were insurmountable in others.  The changes 
-in R5 can be broken down into a few key points:
+A resource redesign with breaking changes is not something the FHIR community undertakes lightly.  While the Subscriptions mechanism availble in R4 worked for some use cases, there were implementation issues which were insurmountable in others.  The changes in R5 can be broken down into a few key points:
 
+  - Retain all functionality available in R4
   - Split `Subscription` into two resouces: `Subscription` and `SubscriptionTopic`
   - Allow servers to explicity support specific `SubscriptionTopics`
-  - Remain generically useful to clients
   - Simplify filter language (base on exsisting parts of FHIR)
   - Specify filter restrictions in `SubscriptionTopic` (canFilterBy) to ease implementation
 
 More detail below (link)
 
 - Why Encounter Notifications
-
-Subscriptions are being designed to cover many use cases.  In choosing an area to focus on, 
-Encounter notifications were decided on as a good 'first step'.
 
   - Encounter notifications are currently quite relevant in the U.S., given forthcoming rules and regulations (e.g., both patient access and care team notifications).  
 
@@ -42,17 +32,13 @@ Encounter notifications were decided on as a good 'first step'.
 
   - Encounter notifications enable many workflows, both internal and external to a provider
 
-  - Easy case to use: widely applicable and not political
+  - Low political ramifications
 
 - Why an Argonaut Guide
 
-The Argonaut Project felt that establishing canonical resource instances for Encounters 
-would allow for faster and broader adoption.
+  - The Argonaut Project felt that establishing canonical resource instances for Encounters would allow for faster and broader adoption.
 
-By engaging vendors and providers in a tight feedback loop, the Argonaut Project could 
-help move the R5 redesign work forward.
-
-
+  - By engaging vendors and providers in a tight feedback loop, the Argonaut Project could help move the R5 redesign work forward.
 
 
 ## Use case: encounter notifications
@@ -112,30 +98,13 @@ When an expired Subscription is detected, a server may choose to either remove t
 
 ## More on Subscriptions R5
 
-Subscriptions in FHIR R4 were designed to be very generic and generally unconcerned with
-the internal operations of the server.  While powerful in concept, this design led to 
-many servers not implementing Subscriptions.  Even on servers where it was implemented,
-it was generally restricted to certain areas or concepts, which were not able to be 
-documented with R4 resources.  In practice, this meant that implementing Subscriptions
-required working extensively with a specific server implementation to discover and 
-coordinate what functionality was usable and in which formats queries needed to be defined.
+Subscriptions in FHIR R4 were designed to be very generic and generally unconcerned with the internal operations of the server.  While powerful in concept, this design led to many servers not implementing Subscriptions.  Even on servers where it was implemented, it was generally restricted to certain areas or concepts, which were not able to be documented with R4 resources.  In practice, this meant that implementing Subscriptions required working extensively with a specific server implementation to discover and coordinate what functionality was usable and in which formats queries needed to be defined.
 
-It was decided that the design of Subscriptions in R4 was not able to move beyond the
-issues, and that a redesign was required.  In FHIR R5, Subscriptions have been broken into 
-two resources, `SubscriptionTopic` and `Subscription`, which adress the issues with Subscriptions in 
-R4.  Even with the redesign, there is a potential issue with interoperability based on
-Topic definitions, which this guide aims to prevent.
+It was decided that the design of Subscriptions in R4 was not able to move beyond the issues, and that a redesign was required.  In FHIR R5, Subscriptions have been broken into two resources, `SubscriptionTopic` and `Subscription`, which adress the issues with Subscriptions in R4.  Even with the redesign, there is a potential issue with interoperability based on Topic definitions, which this guide aims to prevent.
 
-With the new design, servers are able to support a reduced set of Subscription Topics, with a reduced
-set of clearly-defined filters to clients.  This allows clients to be developed generically
-while also lowering the burden on server developers.
+With the new design, servers are able to support a reduced set of Subscription Topics, with a reduced set of clearly-defined filters to clients.  This allows clients to be developed generically while also lowering the burden on server developers.
 
-Subscription Topics fall under two categories: conceptual and computable.  There is overlap between
-the two (e.g., a server can computably define a new Admission encounter), but the server
-is able to use whatever internal implementation makes sense to capture the concept being
-expressed.  For example, in the Encounter-Start Subscription Topic defined below, two possible computable
-definitions are provided (in FHIRPath and using Query), but existing facade servers may
+Subscription Topics fall under two categories: conceptual and computable.  There is overlap between the two (e.g., a server can computably define a new Admission encounter), but the server is able to use whatever internal implementation makes sense to capture the concept being expressed.  For example, in the Encounter-Start Subscription Topic defined below, two possible computable definitions are provided (in FHIRPath and using Query), but existing facade servers may
 choose to simply implement the Subscription Topic as part of an existing HL7 v2 ADT workflow.
 
-Given the goals of the redesign, filtering is based on Search and Search Modifiers.  This
-allows for more code reuse (for clients and servers) and lowers the bar for implementation.
+Given the goals of the redesign, filtering is based on Search and Search Modifiers.  This allows for more code reuse (for clients and servers) and lowers the bar for implementation.
