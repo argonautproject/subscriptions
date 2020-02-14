@@ -8,9 +8,7 @@ Last updated from build.fhir.org (R5 development branch) on February 06, 2020.
 
 ## Background
 
-- Subscription Changes (R4 - R5)
-
-A resource redesign with breaking changes is not something the FHIR community undertakes lightly.  While the Subscriptions mechanism availble in R4 worked for some use cases, there were implementation issues which were insurmountable in others.  The changes in R5 can be broken down into a few key points:
+In 2019, the FHIR Infrastructure WG decided that the existing `Subscription` mechanism did not work for all required use cases, and that it would need to be redesigned.  A resource redesign with breaking changes is not something the FHIR community undertakes lightly.  While the Subscriptions mechanism availble in R4 worked for some use cases, there were implementation issues which were insurmountable in others.  The changes in R5 can be broken down into a few key points:
 
   - Retain all functionality available in R4
   - Split `Subscription` into two resouces: `Subscription` and `SubscriptionTopic`
@@ -18,9 +16,11 @@ A resource redesign with breaking changes is not something the FHIR community un
   - Simplify filter language (base on exsisting parts of FHIR)
   - Specify filter restrictions in `SubscriptionTopic` (canFilterBy) to ease implementation
 
-More detail below (link)
+A longer discussion about the redesign can be found [here](#r5-long).
 
-- Why Encounter Notifications
+## Rationale
+
+- Why Encounter Notifications?
 
   - Encounter notifications are currently quite relevant in the U.S., given forthcoming rules and regulations (e.g., both patient access and care team notifications).  
 
@@ -34,7 +34,7 @@ More detail below (link)
 
   - Low political ramifications
 
-- Why an Argonaut Guide
+- Why an Argonaut Guide?
 
   - The Argonaut Project felt that establishing canonical resource instances for Encounters would allow for faster and broader adoption.
 
@@ -43,25 +43,19 @@ More detail below (link)
 
 ## Use case: encounter notifications
 
-- Describe (briefly) use cases for encounters
-
 There are a few key use cases that Argonaut focused on in terms of Encounter notifications:
 
 - Single patient (identified by id) start of encounter
 
-This use case covers a system being notified when a particular patient of interest
-has started a new encounter.
+  This use case covers a system being notified when a specific patient of interest has started a new encounter.
 
-For example, a consumer device (e.g., phone) receiving notifications that a person is ..? (phrasing)
+  For example, a consumer device (e.g., phone) receiving notifications that a person has started a new encounter (visit) to the Emergency Room.
 
 - Single patient (identified by group membership) start of encounter
 
-This use case covers a system being notified when a patient within a defined group
-has started a new encounter.
+  This use case covers a system being notified when a patient within a defined group has started a new encounter.
 
-For example, a physician receiving notifications that one of their patients is being seen
-by another physician or organization.
-
+  For example, a physician's system being notified that patients is being seen by another physician or organization.
 
 ## Canonical Argonaut `SubscriptionTopic` Resources
 
@@ -69,18 +63,25 @@ by another physician or organization.
 
 - SubscriptionTopic: [Encounter End](canonical/subscriptiontopic-encounter-end.json)
 
-
 ## Define Profile on Subscriptions (channel, payload, etc)
 
-- Must support for channel=`rest-hook`, payload={`empty`, `id-only`}
+- Subscription.channel.type = `rest-hook`
 
-`Subscription.end` is a required field.  This field is necessary to detect stale subscriptions for removal.  Servers are allowed to determine a reasonable maximum time span, but MUST allow at least thirty one (31) days in the future.  The actual value used should be reasonably tied to the expected duration of the subscription, however it is understood that long-running Subscriptions will need to update this value periodically.  For example, on a server allowing the minumim span of thirty one (31) days, a Subscription created on 15 October 2019 would be allowed have an `end` set for no later than 15 November 2019.
+  
 
-Using a time less than one month is permitted.  For clients that expect to be short-lived, it is reasonable to set a time less than one month in the future (e.g., one hour, one day, one week, etc.).
+- Subscription.channel.payload = {`empty`, `id-only`}
 
-Servers SHALL support updating the `end` field of an active Subscription so that a Subscription may be extended.  Servers are allowed to determine their maximum future span of time allowed when updating, given that it is also at least thirty one (31) days.
+- Subscription.channel.payload.contentType = {`fhir+json`, `json`}
 
-When an expired Subscription is detected, a server may choose to either remove the resource or update the `status` to `off`.
+- Subscription.channel.end
+
+  This field is necessary to detect stale subscriptions for removal.  Servers are allowed to determine a reasonable maximum time span, but MUST allow at least thirty one (31) days in the future.  The actual value used should be reasonably tied to the expected duration of the subscription, however it is understood that long-running Subscriptions will need to update this value periodically.  For example, on a server allowing the minumim span of thirty one (31) days, a Subscription created on 15 October 2019 would be allowed have an `end` set for no later than 15 November 2019.
+
+  Using a time less than one month is permitted.  For clients that expect to be relatively short-lived, it is reasonable to set a time less than one month in the future (e.g., one week, etc.).
+
+  Servers SHALL support updating the `end` field of an active Subscription so that a Subscription may be extended.  Servers are allowed to determine their maximum future span of time allowed when updating, given that it is also at least thirty one (31) days.
+
+  When an expired Subscription is detected, a server may choose to either remove the resource or update the `status` to `off`.
 
 ## Worked examples for end-to-end exchange
 
@@ -96,7 +97,7 @@ When an expired Subscription is detected, a server may choose to either remove t
 - Servers may want to consider the use of authenticated delivery systems (e.g., asymmetric key signing) to allow clients to validate the message origin without the need of a client secret.
 
 
-## More on Subscriptions R5
+## [More on Subscriptions R5](#r5-long)
 
 Subscriptions in FHIR R4 were designed to be very generic and generally unconcerned with the internal operations of the server.  While powerful in concept, this design led to many servers not implementing Subscriptions.  Even on servers where it was implemented, it was generally restricted to certain areas or concepts, which were not able to be documented with R4 resources.  In practice, this meant that implementing Subscriptions required working extensively with a specific server implementation to discover and coordinate what functionality was usable and in which formats queries needed to be defined.
 
