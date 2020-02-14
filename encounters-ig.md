@@ -10,8 +10,8 @@ Last updated from build.fhir.org (R5 development branch) on February 06, 2020.
 
 In 2019, the FHIR Infrastructure WG decided that the existing `Subscription` mechanism did not work for all required use cases, and that it would need to be redesigned.  A resource redesign with breaking changes is not something the FHIR community undertakes lightly.  While the Subscriptions mechanism availble in R4 worked for some use cases, there were implementation issues which were insurmountable in others.  The changes in R5 can be broken down into a few key points:
 
-  - Retain all functionality available in R4
-  - Split `Subscription` into two resouces: `Subscription` and `SubscriptionTopic`
+  - Retain functionality available in R4
+  - Split `Subscription` into two definition resouces: `Subscription` and `SubscriptionTopic`
   - Allow servers to explicity support specific `SubscriptionTopics`
   - Simplify filter language (base on exsisting parts of FHIR)
   - Specify filter restrictions in `SubscriptionTopic` (canFilterBy) to ease implementation
@@ -67,11 +67,17 @@ There are a few key use cases that Argonaut focused on in terms of Encounter not
 
 - Subscription.channel.type = `rest-hook`
 
-  
+  Given the RESTful nature of FHIR, the primary communications channel chosen for this guide is also REST-based.  Although there are challenges in host REST services (e.g., forwarding notifications to phones), these challeneges appeared to be manageable (e.g., a web server that converts REST notifications to Push Messages).
 
 - Subscription.channel.payload = {`empty`, `id-only`}
 
-- Subscription.channel.payload.contentType = {`fhir+json`, `json`}
+  While the Subscription specification allows for three levels of payload information (`empty`, `id-only`, and `full-resource`), many implementers have expressed concerns around the security of including resources.  In order to comply with this guide, a server SHALL support, at a minimum, both the `empty` and `id-only` levels of payload information.
+
+- Subscription.channel.payload.contentType = {`application/fhir+json`, `application/json`}
+
+  Officially, the MIME type for JSON representations of FHIR resources `application/fhir+json`.  There are some differences from standard JSON, which are documented [here](http://hl7.org/fhir/json.html).  With this in mind, the preferred MIME type for notification bundles is `application/fhir+json`.
+
+  However, severs do not accept HTTP POSTS of `application/fhir+json`, and there will be clients which cannot reconfigure the servers to do so.  For that reason, compliant servers SHALL also honor `application/json` as a valid MIME type for Subscriptions, bearing in mind that data posted with that MIME type MUST comply with its rules.
 
 - Subscription.channel.end
 
