@@ -77,7 +77,7 @@ There are a few key use cases that Argonaut focused on in terms of Encounter not
 
   Officially, the MIME type for JSON representations of FHIR resources `application/fhir+json`.  There are some differences from standard JSON, which are documented [here](http://hl7.org/fhir/json.html).  With this in mind, the preferred MIME type for notification bundles is `application/fhir+json`.
 
-  However, severs do not accept HTTP POSTS of `application/fhir+json`, and there will be clients which cannot reconfigure the servers to do so.  For that reason, compliant servers SHALL also honor `application/json` as a valid MIME type for Subscriptions, bearing in mind that data posted with that MIME type MUST comply with its rules.
+  However, HTTP severs do not accept HTTP POSTS of `application/fhir+json` by default, and there will be clients which cannot reconfigure their servers to do so.  For that reason, compliant servers SHALL also honor `application/json` as a valid MIME type for Subscriptions, bearing in mind that data posted with that MIME type MUST comply with its rules.
 
 - Subscription.channel.end
 
@@ -89,14 +89,18 @@ There are a few key use cases that Argonaut focused on in terms of Encounter not
 
   When an expired Subscription is detected, a server may choose to either remove the resource or update the `status` to `off`.
 
-## Worked examples for end-to-end exchange
+## Minimum Required Filter Support
 
-- Need workflow diagrams with examples here.
+- Patient exact match
+
+  One of the primary use cases for ths guide is for a single patient to discover their own events.  To facilitate this, the canonical `SubscriptionTopic` instances for encounters allow for filtering on an exact match on `Patient.id` based on `Encounter.subject`.
+
+- Group / List membership
+
+  The other use case influencing this guide is based on a patient belongning to a `Group` or `List` resource.  To facilitate this, the canonical `SubscriptionTopic` instances for encounters allow for filtering on a `Patient` (via `Encounter.subject`) where a patient is `in` a `Group` or `List`.
 
 ## Security
 
-- REST-Hook security when managing subscriptions by a SMART on FHIR client interface
-- When creating a Subscription, the server SHOULD keep track of the client and user which requested it.
 - When sending notifications, servers SHOULD check that a notification is still authorized prior to sending it (e.g., client and user).
 - Servers are responsible for ensuring that PHI is transmitted securely (e.g., should refuse to transmit in cleartext, require TLS, etc.).
 - Servers SHOULD set a subscription state to `disabled` if a security validation fails, with an appropriate error message for diagnosis.
