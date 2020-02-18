@@ -88,7 +88,7 @@ There are a few key use cases that Argonaut focused on in terms of Encounter not
   Servers SHALL support updating the `end` field of an active Subscription so that a Subscription may be extended.  Servers are allowed to determine their maximum future span of time allowed when updating, given that it is also at least thirty one (31) days.
 
   When an expired Subscription is detected, a server may choose to either remove the resource or update the `status` to `off`.
-
+  
 ## Minimum Required Filter Support
 
 - Patient exact match
@@ -97,7 +97,7 @@ There are a few key use cases that Argonaut focused on in terms of Encounter not
 
 - Group / List membership
 
-  The other use case influencing this guide is based on a patient belongning to a `Group` or `List` resource.  To facilitate this, the canonical `SubscriptionTopic` instances for encounters allow for filtering on a `Patient` (via `Encounter.subject`) where a patient is `in` a `Group` or `List`.
+  The other use case influencing this guide is based on a patient being declared within a `Group` or `List` resource (e.g., a resouce specifying current patients for a care team).  To facilitate this, the canonical `SubscriptionTopic` instances for encounters allow for filtering on a `Patient` (via `Encounter.subject`) where a patient is `in` a `Group` or `List`.
 
 ## Security
 
