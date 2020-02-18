@@ -16,7 +16,7 @@ In 2019, the FHIR Infrastructure WG decided that the existing `Subscription` mec
   - Simplify filter language (base on exsisting parts of FHIR)
   - Specify filter restrictions in `SubscriptionTopic` (canFilterBy) to ease implementation
 
-A longer discussion about the redesign can be found [here](#r5-long).
+A longer discussion about the redesign can be found [here](#more-on-subscriptions-r5).
 
 ## Rationale
 
@@ -88,7 +88,7 @@ There are a few key use cases that Argonaut focused on in terms of Encounter not
   Servers SHALL support updating the `end` field of an active Subscription so that a Subscription may be extended.  Servers are allowed to determine their maximum future span of time allowed when updating, given that it is also at least thirty one (31) days.
 
   When an expired Subscription is detected, a server may choose to either remove the resource or update the `status` to `off`.
-  
+
 ## Minimum Required Filter Support
 
 - Patient exact match
@@ -107,7 +107,7 @@ There are a few key use cases that Argonaut focused on in terms of Encounter not
 - Servers may want to consider the use of authenticated delivery systems (e.g., asymmetric key signing) to allow clients to validate the message origin without the need of a client secret.
 
 
-## [More on Subscriptions R5](#r5-long)
+## More on Subscriptions R5
 
 Subscriptions in FHIR R4 were designed to be very generic and generally unconcerned with the internal operations of the server.  While powerful in concept, this design led to many servers not implementing Subscriptions.  Even on servers where it was implemented, it was generally restricted to certain areas or concepts, which were not able to be documented with R4 resources.  In practice, this meant that implementing Subscriptions required working extensively with a specific server implementation to discover and coordinate what functionality was usable and in which formats queries needed to be defined.
 
