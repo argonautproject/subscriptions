@@ -77,7 +77,7 @@ There are a few key use cases that Argonaut focused on in terms of Encounter not
 
   Officially, the MIME type for JSON representations of FHIR resources `application/fhir+json`.  There are some differences from standard JSON, which are documented [here](http://hl7.org/fhir/json.html).  With this in mind, the preferred MIME type for notification bundles is `application/fhir+json`.
 
-  However, HTTP severs do not accept HTTP POSTS of `application/fhir+json` by default, and there will be clients which cannot reconfigure their servers to do so.  For that reason, compliant servers SHALL also honor `application/json` as a valid MIME type for Subscriptions, bearing in mind that data posted with that MIME type MUST comply with its rules.
+  Note that HTTP servers do not accept HTTP POSTS of application/fhir+json by default, and there will be clients which cannot reconfigure their systems to do so. For that reason, compliant servers SHALL also honor application/json as a valid MIME type for Subscriptions, bearing in mind that data MUST comply with the corresponding MIME type rules.
 
 - Subscription.channel.end
 
