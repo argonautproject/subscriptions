@@ -12,13 +12,13 @@
   ],
   "date": "2019-10-29",
   "description": "Beginning of a clinical encounter",
-  "experimental": true,
+  "experimental": false,
   "resourceTrigger": {
     "description": "Beginning of a clinical encounter",
     "fhirPathCriteria": "%previous.status!='in-progress' and %current.status='in-progress'",
     "queryCriteria": {
-      "current": "status:in-progress",
       "previous": "status:not=in-progress",
+      "current": "status=in-progress",
       "requireBoth": true
     },
     "resourceType": [
