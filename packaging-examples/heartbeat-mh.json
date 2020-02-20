@@ -1,0 +1,26 @@
+{
+  "resourceType": "Bundle",
+  "id": "handshake",
+  "type": "message",
+  "timestamp": "2019-08-07T10:24:13.1882432-05:00",
+  "entry": [{
+    "resoure": {
+      "resourceType": "MessageHeader",
+      "source": {
+        "endpoint": "https://ehr.example.org/fhir"
+      },
+      "eventCoding": {
+        "system": "http://hl7.org/fhir/message-events/subscription-notification"
+      },
+      "eventsSinceSubscriptionStart": "30",
+      "eventsInBundle": "0",
+      "subscription": {
+        "reference": "https://example.org/Subscription/cb2dce51-a1f5-40b4-a98b-c934eae368e8"
+      },
+      "subscriptionStatus": "active",
+      "topic": {
+        "reference": "https://example.org/SubscriptionTopic/admission"
+      }
+    }
+  }]
+}

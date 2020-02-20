@@ -1,0 +1,21 @@
+{
+  "resourceType": "Bundle",
+  "id": "heartbeat",
+  "type": "subscription-notification",
+  "timestamp": "2019-08-07T10:24:13.1882432-05:00",
+  "entry": [{
+    "resource": {
+      "resourceType": "SubscriptionStatus",
+      "notificationType": "heartbeat",
+      "eventsSinceSubscriptionStart": "30",
+      "eventsInBundle": "0",
+      "subscription": {
+        "reference": "https://example.org/Subscription/cb2dce51-a1f5-40b4-a98b-c934eae368e8"
+      },
+      "status": "requested",
+      "topic": {
+        "reference": "https://example.org/SubscriptionTopic/admission"
+      }
+    }
+  }]
+}
