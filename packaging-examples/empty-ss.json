@@ -17,15 +17,6 @@
         "reference": "https://example.org/SubscriptionTopic/admission"
       }
     }
-  }, {
-      "fullUrl": "https://example.org/Encounter/2",
-      "request": {
-        "method": "PUT",
-        "url": "Encounter/2"
-      },
-      "response": {
-        "status": "201"
-      }
-    }
+  }
   ]
 }
