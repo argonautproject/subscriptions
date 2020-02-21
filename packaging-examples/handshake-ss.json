@@ -7,8 +7,6 @@
     "resource": {
       "resourceType": "SubscriptionStatus",
       "notificationType": "handshake",
-      "eventsSinceSubscriptionStart": "0",
-      "eventsInBundle": "0",
       "subscription": {
         "reference": "https://example.org/Subscription/cb2dce51-a1f5-40b4-a98b-c934eae368e8"
       },

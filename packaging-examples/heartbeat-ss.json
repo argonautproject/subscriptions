@@ -8,11 +8,10 @@
       "resourceType": "SubscriptionStatus",
       "notificationType": "heartbeat",
       "eventsSinceSubscriptionStart": "30",
-      "eventsInBundle": "0",
       "subscription": {
         "reference": "https://example.org/Subscription/cb2dce51-a1f5-40b4-a98b-c934eae368e8"
       },
-      "status": "requested",
+      "status": "active",
       "topic": {
         "reference": "https://example.org/SubscriptionTopic/admission"
       }
