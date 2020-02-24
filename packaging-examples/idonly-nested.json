@@ -12,7 +12,7 @@
       "eventCoding": {
         "system": "http://hl7.org/fhir/message-events/subscription-notification"
       },
-      "subscriptionStatus": {
+      "subscriptionInfo": {
         "notificationType": "event-notification",
         "eventsSinceSubscriptionStart": "3513",
         "eventsInBundle": "1",
@@ -22,7 +22,7 @@
         "status": "active",
         "topic": {
           "reference": "https://example.org/SubscriptionTopic/admission"
-        }  
+        }
       },
       "focus": [{
         "reference": "https://example.org/Encounter/2"
