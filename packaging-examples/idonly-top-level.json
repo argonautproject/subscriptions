@@ -1,0 +1,27 @@
+{
+  "resourceType": "Notification",
+  "id": "notification-id-only",
+  "timestamp": "2019-08-07T10:24:13.1882432-05:00",
+  "notificationType": "event-notification",
+  "eventsSinceSubscriptionStart": "3513",
+  "eventsInBundle": "1",
+  "subscription": {
+    "reference": "https://example.org/Subscription/cb2dce51-a1f5-40b4-a98b-c934eae368e8"
+  },
+  "status": "active",
+  "topic": {
+    "reference": "https://example.org/SubscriptionTopic/admission"
+  },
+  "entry": [
+  {
+      "fullUrl": "https://example.org/Encounter/2",
+      "request": {
+        "method": "PUT",
+        "url": "Encounter/2"
+      },
+      "response": {
+        "status": "201"
+      }
+    }
+  ]
+}
