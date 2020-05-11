@@ -511,7 +511,7 @@ A client can register for its user to receive notifications by
         "coding":[
            {
               "system":"http://terminology.hl7.org/CodeSystem/subscription-channel-type",
-              "code":"sms"
+              "code":"message"
            }
         ]
      },
