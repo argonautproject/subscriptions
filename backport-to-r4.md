@@ -46,46 +46,46 @@ A "create subscription" request has a `POST` body like:
 ```json
 {
   "resourceType": "Basic",
+  "id": "2be70090-1b1d-4651-88a6-f17a0fb8ed9d",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/json-embedded-resource",
+      "valueString": "{\"resourceType\":\"Subscription\",\"id\":\"2be70090-1b1d-4651-88a6-f17a0fb8ed9d\",\"status\":\"active\",\"topic\":{\"reference\":\"https://server.subscriptions.argo.run/Basic/encounter-start\"},\"end\":\"2020-05-11T21:21:36.047+00:00\",\"reason\":\"Client Testing\",\"filterBy\":[{\"searchParamName\":\"patient\",\"searchModifier\":\"=\",\"value\":\"Patient/48157\"}],\"channelType\":{\"system\":\"http://terminology.hl7.org/CodeSystem/subscription-channel-type\",\"code\":\"rest-hook\",\"display\":\"Rest Hook\"},\"endpoint\":\"https://client.subscriptions.argo.run/Endpoints/bc768dd9-fbaa-445a-88b1-5c7b63b70e9c\",\"heartbeatPeriod\":60,\"contentType\":\"application/fhir+json\",\"content\":\"id-only\"}"
+    }
+  ],
   "code": {
     "coding": [
       {
         "system": "http://hl7.org/fhir/resource-types",
         "code": "R5Subscription"
       }
-    ]
-  },
-  "subject": {
-    "reference": "Patient/58"
-  },
-  "extension": [
-    {
-      "url": "http://hl7.org/fhir/StructureDefinition/json-embedded-resource",
-      "valueString": "{\"resourceType\":\"Subscription\",\"channel\":{\"endpoint\":\"https://client.subscriptions.argo.run/Endpoints/b962286c-d1c6-4b13-a409-8df2a7208fb8\",\"header\":[],\"heartbeatPeriod\":60,\"payload\":{\"content\":\"id-only\",\"contentType\":\"application/fhir+json\"},\"type\":{\"coding\":[{\"code\":\"rest-hook\",\"display\":\"Rest Hook\",\"system\":\"http://terminology.hl7.org/CodeSystem/subscription-channel-type\",\"userSelected\":false}],\"text\":\"REST Hook\"}},\"end\":\"2019-09-20T15:21:28.427Z\",\"eventCount\":0,\"filterBy\":[{\"matchType\":\"=\",\"name\":\"patient\",\"value\":\"Patient/58\"}],\"reason\":\"Client Testing\",\"status\":\"requested\",\"topic\":{\"reference\":\"https://server-r4.subscriptions.argo.run/Basic/1\"}}"
-    }
-  ]
+    ],
+    "text": "Backported R5 Subscription"
+  }
 }
 ```
 
-Note this subscription points to its SubscriptionTopic as `https://server-r4.subscriptions.argo.run/Basic/1`, indicating that the contents of `Basic/1` on the server should look like:
+Note this subscription points to its SubscriptionTopic as `https://server.subscriptions.argo.run/Basic/encounter-start`, indicating that the contents of `Basic/encounter-start` on the server should look like:
 
 ```json
 {
-  "resourceType": "Basic",
-  "id": 1,
-  "code": {
-    "coding": [
-      {
-        "system": "http://hl7.org/fhir/resource-types",
-        "code": "R5SubscriptionTopic"
-      }
-    ]
-  },
-  "extension": [
-    {
-      "url": "http://hl7.org/fhir/StructureDefinition/json-embedded-resource",
-      "valueString": "{\"resourceType\":\"SubscriptionTopic\",\"canFilterBy\":[{\"documentation\":\"Exact match to a patient resource (reference)\",\"matchType\":[\"=\",\"in\",\"not-in\"],\"name\":\"patient\"}],\"date\":\"2019-08-01\",\"description\":\"Admission Subscription Topic for testing framework and behavior\",\"experimental\":true,\"resourceTrigger\":{\"description\":\"Beginning of a clinical encounter\",\"fhirPathCriteria\":\"%previous.status!='in-progress' and %current.status='in-progress'\",\"queryCriteria\":{\"current\":\"status:in-progress\",\"previous\":\"status:not=in-progress\",\"requireBoth\":true},\"resourceType\":[\"Encounter\"]},\"status\":\"draft\",\"title\":\"admission\",\"url\":\"http://argonautproject.org/subscription-ig/SubscriptionTopic/admission\",\"version\":\"0.4\",\"id\":\"1\"}"
+    "resourceType": "Basic",
+    "id": "encounter-start",
+    "extension": [
+        {
+            "url": "http://hl7.org/fhir/StructureDefinition/json-embedded-resource",
+            "valueString": "{\"resourceType\":\"SubscriptionTopic\",\"id\":\"encounter-start\",\"url\":\"http://argonautproject.org/encounters-ig/SubscriptionTopic/encounter-start\",\"version\":\"1.1\",\"title\":\"encounter-start\",\"status\":\"draft\",\"experimental\":true,\"date\":\"2020-05-11\",\"description\":\"Beginning of a clinical encounter\",\"resourceTrigger\":{\"description\":\"Beginning of a clinical encounter\",\"resourceType\":[\"Encounter\"],\"queryCriteria\":{\"previous\":\"status:not=in-progress\",\"current\":\"status:in-progress\",\"requireBoth\":true},\"fhirPathCriteria\":[\"%previous.status!='in-progress' and %current.status='in-progress'\"]},\"canFilterBy\":[{\"searchParamName\":\"patient\",\"searchModifier\":[\"=\",\"in\"],\"documentation\":\"Exact match to a patient resource (reference)\"}]}"
+        }
+    ],
+    "code": {
+        "coding": [
+            {
+                "system": "http://hl7.org/fhir/resource-types",
+                "code": "R5SubscriptionTopic"
+            }
+        ],
+        "text": "Backported R5 SubscriptionTopic"
     }
-  ]
 }
 ```
 

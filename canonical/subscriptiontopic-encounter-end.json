@@ -3,19 +3,21 @@
   "canFilterBy": [
     {
       "documentation": "Matching based on the Patient (subject) of an Encounter or based on the Patient's group membership (in).",
-      "matchType": [
+      "searchModifier": [
         "=",
         "in"
       ],
-      "name": "patient"
+      "searchParamName": "patient"
     }
   ],
-  "date": "2019-10-29",
+  "date": "2020-05-11",
   "description": "End of a clinical encounter",
   "experimental": false,
   "resourceTrigger": {
     "description": "End of a clinical encounter",
-    "fhirPathCriteria": "%previous.status='in-progress' and %current.status!='in-progress'",
+    "fhirPathCriteria": [
+      "%previous.status='in-progress' and %current.status!='in-progress'"
+    ],
     "queryCriteria": {
       "previous": "status=in-progress",
       "current": "status:not=in-progress",
@@ -28,6 +30,6 @@
   "status": "active",
   "title": "encounter-end",
   "url": "http://argonautproject.org/encounters-ig/SubscriptionTopic/encounter-end",
-  "version": "1.0",
+  "version": "1.1",
   "id": "encounter-end"
 }
