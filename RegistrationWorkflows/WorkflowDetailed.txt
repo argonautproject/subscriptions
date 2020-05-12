@@ -14,7 +14,7 @@ note right of Server:""Create subscription record\n- status: <color:#magenta>req
 
 Server-->Client:""HTTP Response (FHIR):\n**Status Code / Resource / OperationOutcome**\n - status: requested\n - id:     <color:#green>s202</color>\n""\n
 
-Server -> Client Endpoint:""Bundle:                                    \n**HTTP POST to <color:#blue>...client/notifications/293</color>**\n- type     subscription-notification\n- entries: [                         \n  - entry 0:                        SubscriptionStatus\n    - notificationType:             handshake\n    - eventsSinceSubscriptionStart: 0\n    - eventsInNotification:         0\n    - subscription:                 <color:#green>Subscription/s202</color>\n    - status:                       <color:#magenta>requested</color>\n    - topic:                        <color:#red>...SubscriptionTopic/encounter-start</color>\n]                                       ""\n
+Server -> Client Endpoint:""Bundle:                                    \n**HTTP POST to <color:#blue>...client/notifications/293</color>**\n- type     subscription-notification\n- entries: [                         \n  - entry 0:                        SubscriptionStatus\n    - notificationType:             handshake\n    - eventsSinceSubscriptionStart: 0\n    - eventsInNotification:         0\n    - subscription:                 <color:#green>Subscription/s202</color>\n    - status:                       <color:#magenta>requested</color>\n    - topic:                        <color:#red>.../SubscriptionTopic/encounter-start</color>\n]                                       ""
 
 Client Endpoint-->Server:""HTTP Response (Generic)""
 
