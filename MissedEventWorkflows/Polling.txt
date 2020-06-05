@@ -3,15 +3,15 @@ participantspacing 13
 participant Server
 participant Client
 
-Server -> Client: ""Subscription 'p_123'\n- subscription-event-count: 20
+Server -> Client: ""Subscription 'p_123'\n- eventsSinceSubscriptionStart: 20
 
 entryspacing 3
 
 note left of Client: Too much time has elapsed without\na new event...
 
-Client -> Server: ""Request (HTTP GET):\n.../Subscription/p_123
+Client -> Server: ""Request (HTTP GET):\n.../Subscription/p_123/$status
 entryspacing 1
-Server --> Client: ""Subscription 'p_123'\n - state:      **error**\n - eventCount: **22**""
+Server --> Client: ""Bundle (searchset)\n- entry[0]: SubscriptionStatus\n  - subscription: /Subscription/p_123\n  - state:        **error**\n  - eventsSinceSubscriptionStart: **22**""
 
 entryspacing 2
 

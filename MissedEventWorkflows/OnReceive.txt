@@ -1,13 +1,13 @@
-participantspacing 13
+participantspacing 15
 
 participant Server
 participant Client
 
-Server -> Client: ""Subscription 'p_123'\n- subscription-event-count: 20
+Server -> Client: ""Notification for Subscription 'p_123'\n- eventsSinceSubscriptionStart: 20
 
-Server -> Client: ""Subscription 'p_123'\n- subscription-event-count: 21
+Server -> Client: ""Notification for Subscription 'p_123'\n- eventsSinceSubscriptionStart: 21
 
-Server -> Client: ""Subscription 'p_123'\n- subscription-event-count: 23
+Server -> Client: ""Notification for Subscription 'p_123'\n- eventsSinceSubscriptionStart: 23
 
 entryspacing 3
 

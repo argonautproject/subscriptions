@@ -3,18 +3,18 @@ participantspacing 20
 participant Server
 participant Client
 
-note over Client:""Client creates notification endpoint""
+note over Client:""Client creates notification endpoint   ""
 
 participant Client Endpoint
 Client-->*Client Endpoint:
 
 Client->Server:""Create Subscription\n**POST .../Subscription**\n- topic:        <color:#red>.../SubscriptionTopic/encounter_start</color>\n- filterBy:\n  - searchParamName: patient\n  - searchModifier:  =\n  - value:           Patient/123\n- channelType:  rest-hook\n- endpoint:     <color:#blue>...client/notifications/293</color>\n- contentType:  application/fhir+json\n- content:      empty""
 
-note right of Server:""Create subscription record\n- status: <color:#magenta>requested""
+note right of Server:""Create subscription record   \n- status: <color:#magenta>requested""
 
 Server-->Client:""HTTP Response (FHIR):\n**Status Code / Resource / OperationOutcome**\n - status: requested\n - id:     <color:#green>s202</color>\n""\n
 
-Server -> Client Endpoint:""Bundle:                                    \n**HTTP POST to <color:#blue>...client/notifications/293</color>**\n- type     subscription-notification\n- entries: [                         \n  - entry 0:                        SubscriptionStatus\n    - notificationType:             handshake\n    - eventsSinceSubscriptionStart: 0\n    - eventsInNotification:         0\n    - subscription:                 <color:#green>Subscription/s202</color>\n    - status:                       <color:#magenta>requested</color>\n    - topic:                        <color:#red>.../SubscriptionTopic/encounter-start</color>\n]                                       ""
+Server -> Client Endpoint:""Bundle:                                    \n**HTTP POST to <color:#blue>...client/notifications/293</color>**\n- type     subscription-notification\n- entries: [                         \n  - entry[0]:                       SubscriptionStatus\n    - notificationType:             handshake\n    - eventsSinceSubscriptionStart: 0\n    - eventsInNotification:         0\n    - subscription:                 <color:#green>Subscription/s202</color>\n    - status:                       <color:#magenta>requested</color>\n    - topic:                        <color:#red>.../SubscriptionTopic/encounter-start</color>\n]                                       ""
 
 Client Endpoint-->Server:""HTTP Response (Generic)""
 

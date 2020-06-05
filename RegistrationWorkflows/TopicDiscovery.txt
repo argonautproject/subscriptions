@@ -1,4 +1,4 @@
-title Topic Discovery
+title SubscriptionTopic Discovery
 
 participantspacing 7
 
@@ -7,8 +7,8 @@ participant Client
 
 note right of Server:Server implements SubscriptionTopics,\neach of which includes a list of\nfilters valid filters for that SubscriptionTopic.
 
-Client->Server:Request list of Topic Resources\n**GET .../SubscriptionTopic/**
-Server-->Client:List of supported SubscriptionTopic Resources\n**Bundle of Topic entries**
+Client->Server:Request list of SubscriptionTopic Resources\n**GET .../SubscriptionTopic/**
+Server-->Client:List of supported SubscriptionTopic Resources\n**Bundle (searchset) of SubscriptionTopic entries**
 end
 
-note over Client:Client determines\nwhich SubscriptionTopic \ncovers desired notifications.
+note left of Client:Client determines\nwhich SubscriptionTopic \ncovers desired notifications.

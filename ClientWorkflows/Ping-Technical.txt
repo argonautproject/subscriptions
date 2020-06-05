@@ -1,7 +1,9 @@
+participantspacing 20
+
 participant Server
 participant Client
 
-Server -> Client: ""Notification Bundle:\n- HTTP POST to Client Endpoint\n- meta.extensions:\n  - [subscription-url]:         /Subscription/s202\n  - [subscription-topic-url]:   /Topic/encounter-start\n  - [subscription-status]:      active\n  - [subscription-event-count]: 5\n  - [bundle-event-count]:       1\n- entries: []""
+Server -> Client: ""Notification Bundle:\n- HTTP POST to Client Endpoint\n- entry[0].resource (SubscriptionStatus):\n  - type:          event-notification\n  - subscription:  /Subscription/s202\n  - topic:         .../SubscriptionTopic/encounter-start\n  - status:        active\n  - eventsSinceSubscriptionStart: 5\n  - eventsInNotification:         1\n""
 
 Client--> Server: ""Channel Response\n - HTTP 200 (OK)""
 
