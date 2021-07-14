@@ -17,7 +17,7 @@
         "status": "active",
         "type": "event-notification",
         "eventsSinceSubscriptionStart": "310",
-        "eventsInNotification": 1,
+        "eventsInNotification": 2,
         "subscription": {
           "reference": "https://example.org/fhir/r4/Subscription/admission"
         },
