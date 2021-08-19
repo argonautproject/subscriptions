@@ -1,0 +1,21 @@
+graph TD
+A{Patient};
+B(Ask for New Patient Info);
+C(Ask for Search Parameters);
+D[Search for Patient];
+E[Create Patient];
+F(Select Patient);
+G[Create Endpoint];
+H[Validate Endpoint];
+I[Trigger Events];
+J[Receive Notifications];
+A --> |Create New Patient| B;
+A --> |Search for Existing Patient| C;
+B-->E;
+C-->D;
+D-->F;
+E-->G;
+F-->G;
+G-->H;
+H-->I;
+I-->J;

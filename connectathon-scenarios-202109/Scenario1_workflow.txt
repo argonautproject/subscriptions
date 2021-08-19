@@ -1,0 +1,47 @@
+title Scenario 1 Workflow
+
+participantspacing 7
+
+participant Server
+participant Client
+
+group Optional: Prior to Subscription
+  note right of Server:Server implements SubscriptionTopics,\n which includes the list of\nvalid filters for each SubscriptionTopic.
+
+  Client->Server:Request all SubscriptionTopic Resources
+  Server-->Client:Bundle of implemented SubscriptionTopic Resources
+end
+
+alt Select Existing Patient
+  note over Client:Ask User for criteria
+  Client->Server:Ask for Patients
+  Server-->Client:Bundle of matching patients
+  note over Client:User selects a patient
+else Create New Patient
+  note over Client:Ask User for Patient Information
+  Client->Server:Create Patient
+  Server-->Client:Patient Information (created)
+end
+
+note over Client:Client creates endpoint\nto listen for notifications.
+
+participant Client Endpoint
+Client-->*Client Endpoint:
+
+Client->Server:""Create Subscription\n**POST .../Subscription**\n- topic:        <color:#red>.../SubscriptionTopic/encounter_start</color>\n- channelType:  rest-hook\n- endpoint:     <color:#blue>https://<Client Endpoint></color>\n- contentType:  application/fhir+json\n- content:      empty\n- filterBy:\n  - searchParamName: patient\n  - searchModifier:  =\n  - value:           Patient/123""
+
+note right of Server:""Create subscription record\n- status: <color:#magenta>requested""
+
+Server-->Client:""HTTP Response (FHIR):\n**Status Code / Resource / OperationOutcome**\n - status: requested\n - id:     <color:#green>Subscription/<id></color>\n""\n
+
+Server -> Client Endpoint:""Bundle:                                    \n**HTTP POST to <color:#blue>https://<Client Endpoint></color>**\n- type     subscription-notification\n- entries: [                         \n  - entry 0:                        SubscriptionStatus\n    - notificationType:             handshake\n    - eventsSinceSubscriptionStart: 0\n    - eventsInNotification:         0\n    - subscription:                 <color:#green>Subscription/<id></color>\n    - status:                       <color:#magenta>requested</color>\n    - topic:                        <color:#red>.../SubscriptionTopic/encounter-start</color>\n]                                       ""
+
+Client Endpoint-->Server: ""HTTP 202 (Accepted)""
+
+note right of Server:Change subscription state to 'active'
+
+note over Client:Trigger Event
+
+Server -> Client Endpoint:""Bundle:                                    \n**HTTP POST to <color:#blue>https://<Client Endpoint></color>**\n- type     subscription-notification\n- entries: [\n  - entry 0:                        SubscriptionStatus\n    - notificationType:             event-notification\n    - eventsSinceSubscriptionStart: 1          \n    - eventsInNotification:         1          \n    - subscription:                 <color:#green>Subscription/<id></color>\n    - status:                       <color:#magenta>active</color>       \n    - topic:                        <color:#red>.../SubscriptionTopic/encounter-start</color>\n]                                       ""
+
+Client Endpoint-->Server: ""HTTP 202 (Accepted)""
