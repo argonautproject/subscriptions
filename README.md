@@ -46,7 +46,7 @@
   - Add notification shapes (notifications can include related resources)
   - Continue focused work on Backport IG in lead up to publication
   - [Connectathon 28](https://confluence.hl7.org/display/FHIR/2021-09+Subscriptions) - September
--2022
+- 2022
   - `SubscriptionTopic` and `SubscriptionStatus` included in FHIR R4B (https://hl7.org/FHIR/R4B)
   - "Backport" IG supports opic-based subscriptions in FHIR R4B (http://build.fhir.org/ig/HL7/fhir-subscription-backport-ig)
 ## Overview
